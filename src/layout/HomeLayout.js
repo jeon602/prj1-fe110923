@@ -6,10 +6,8 @@ import { NavBar } from "../component/NavBar";
 export function HomeLayout() {
   return (
     <Box>
-      <Box>
-        <NavBar />
-        <Outlet />
-      </Box>
+      <NavBar />
+      <Outlet />
     </Box>
   );
 }
