@@ -15,8 +15,10 @@ export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
+
   const toast = useToast();
   const navigate = useNavigate();
+
   function handleSubmit() {
     axios
       .post("/api/board/add", {
