@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -14,6 +15,8 @@ export function BoardWrite() {
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
 
+  const toast = useToast();
+
   function handleSubmit() {
     axios
       .post("/api/board/add", {
@@ -21,8 +24,25 @@ export function BoardWrite() {
         content,
         writer,
       })
-      .then(() => console.log("처리됨"))
-      .catch(() => console.log("안됨"))
+      .then(() => {
+        toast({
+          description: "새 글이 저장되었습니다.",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        console.log(error.response.status);
+        if (error.response.status === 400) {
+          toast({
+            description: "작성한 내용을 확인해주세요",
+            status: "error",
+          });
+        }
+        toast({
+          description: "저장 중에 문제가 발생하였습니다.",
+          status: "error",
+        });
+      })
       .finally(() => console.log("끝"));
   }
 
@@ -32,7 +52,7 @@ export function BoardWrite() {
       <Box>
         <FormControl>
           <FormLabel>제목</FormLabel>
-          <Input value={title} onchange={(e) => setTitle(e.target.value)} />
+          <Input value={title} onChange={(e) => setTitle(e.target.value)} />
         </FormControl>
 
         <FormControl>
@@ -50,7 +70,8 @@ export function BoardWrite() {
             onChange={(e) => setWriter(e.target.value)}
           ></Input>
         </FormControl>
-        <Button onClick={handleSubmit} colorScheme="pink">
+
+        <Button onClick={handleSubmit} colorScheme="blue">
           저장
         </Button>
       </Box>
