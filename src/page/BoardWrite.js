@@ -9,14 +9,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
-
   const toast = useToast();
-
+  const navigate = useNavigate();
   function handleSubmit() {
     axios
       .post("/api/board/add", {
@@ -29,15 +29,9 @@ export function BoardWrite() {
           description: "새 글이 저장되었습니다.",
           status: "success",
         });
+        navigate("/");
       })
-      .catch((error) => {
-        console.log(error.response.status);
-        if (error.response.status === 400) {
-          toast({
-            description: "작성한 내용을 확인해주세요",
-            status: "error",
-          });
-        }
+      .catch(() => {
         toast({
           description: "저장 중에 문제가 발생하였습니다.",
           status: "error",
@@ -54,7 +48,6 @@ export function BoardWrite() {
           <FormLabel>제목</FormLabel>
           <Input value={title} onChange={(e) => setTitle(e.target.value)} />
         </FormControl>
-
         <FormControl>
           <FormLabel>본문</FormLabel>
           <Textarea
@@ -62,7 +55,6 @@ export function BoardWrite() {
             onChange={(e) => setContent(e.target.value)}
           ></Textarea>
         </FormControl>
-
         <FormControl>
           <FormLabel>작성자</FormLabel>
           <Input
@@ -70,7 +62,6 @@ export function BoardWrite() {
             onChange={(e) => setWriter(e.target.value)}
           ></Input>
         </FormControl>
-
         <Button onClick={handleSubmit} colorScheme="blue">
           저장
         </Button>
