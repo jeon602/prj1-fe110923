@@ -1,9 +1,10 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import axios from "axios";
 import {
   Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
@@ -12,8 +13,9 @@ import {
 } from "@chakra-ui/react";
 
 export function BoardEdit() {
-  const [board, updateBoard] = useImmer();
+  const [board, updateBoard] = useImmer(null);
   const { id } = useParams();
+  const navigate = useNavigate();
   useParams(() => {
     axios
       .get("/api/board/id" + id)
@@ -21,6 +23,15 @@ export function BoardEdit() {
   }, []);
   if (board == null) {
     return <Spinner />;
+  }
+  function hadleSubmit() {
+    // 저장 버튼 클릭시
+    // put방식으로 /api/board/edit
+
+    axios.put("/api/board/edit", board)
+      .then(()=> console.log("good"))
+      .catch(()=> console.log("Nope"))
+      .finally(()=> console.log("End"));
   }
 
   // 이컴포넌트가보일때바뀔페이지
@@ -62,6 +73,9 @@ export function BoardEdit() {
           }
         />
       </FormControl>
+      <Button colorScheme={"tomato"}>Save</Button>
+      <Button onClick={() => navigate(-1)}>Cancle</Button>
     </Box>
   );
 }
+//-1이전 경로 -2 이전이전 경로
