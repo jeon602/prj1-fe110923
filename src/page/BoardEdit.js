@@ -6,6 +6,7 @@ import {
   Input,
   Spinner,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,6 +18,7 @@ export function BoardEdit() {
 
   // /edit/:id
   const { id } = useParams();
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -36,8 +38,26 @@ export function BoardEdit() {
 
     axios
       .put("/api/board/edit", board)
-      .then(() => console.log("잘됨"))
-      .catch(() => console.log("잘안됨"))
+      .then(() => {
+        toast({
+          description: board.id + "번 게시물 수정",
+          status: "success",
+        });
+        navigate("/board/" + id);
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast({
+            description: "요청이 잘 못 되었습니다",
+            status: "Error",
+          });
+        } else {
+          toast({
+            description: "수정 중에 문제가 발생했습니다.",
+            status: "error",
+          });
+        }
+      })
       .finally(() => console.log("끝"));
   }
 
