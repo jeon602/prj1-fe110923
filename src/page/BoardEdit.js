@@ -28,10 +28,11 @@ export function BoardEdit() {
     // 저장 버튼 클릭시
     // put방식으로 /api/board/edit
 
-    axios.put("/api/board/edit", board)
-      .then(()=> console.log("good"))
-      .catch(()=> console.log("Nope"))
-      .finally(()=> console.log("End"));
+    axios
+      .put("/api/board/edit", board)
+      .then(() => console.log("good"))
+      .catch(() => console.log("Nope"))
+      .finally(() => console.log("End"));
   }
 
   // 이컴포넌트가보일때바뀔페이지
