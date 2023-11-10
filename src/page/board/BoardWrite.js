@@ -16,10 +16,10 @@ export function BoardWrite() {
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const toast = useToast();
   const navigate = useNavigate();
 
+  let submitt;
   function handleSubmit() {
     setIsSubmitting(true);
     axios
@@ -54,9 +54,7 @@ export function BoardWrite() {
 
   return (
     <Box>
-      <h1>
-        게시물 작성
-      </h1>
+      <h1>게시물 작성</h1>
       <Box>
         <FormControl>
           <FormLabel>제목</FormLabel>
