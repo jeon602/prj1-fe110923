@@ -28,7 +28,7 @@ export function BoardList() {
   }
 
   return (
-    <Box>
+    <Box bg="tomato" w="200px" p={3} color="white">
       <h1>게시물 목록</h1>
       <Box>
         <Table>
