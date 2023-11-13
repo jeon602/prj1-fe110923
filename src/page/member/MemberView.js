@@ -84,8 +84,8 @@ export function MemberView() {
         <FormLabel>email</FormLabel>
         <Input value={member.email} readOnly />
       </FormControl>
-      <Button colorScheme="purple">수정</Button>
-      <Button colorScheme="red" onClick={onOpen}>
+      <Button colorScheme="yellowgreen">수정</Button>
+      <Button colorScheme="tomato" onClick={onOpen}>
         탈퇴
       </Button>
 
@@ -99,7 +99,7 @@ export function MemberView() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleDelete} colorScheme="red">
+            <Button onClick={handleDelete} colorScheme="yellowgreen">
               탈퇴
             </Button>
           </ModalFooter>
