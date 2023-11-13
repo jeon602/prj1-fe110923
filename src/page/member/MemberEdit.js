@@ -1,7 +1,3 @@
-//기존 이메일과 같은지?
-//기존 이메일과 같거나 중복확인을 했거나
-//*email을 변경하면(작성시작하면. )중복 확인 다시 할 수 있도록 함
-//기존 이메일과 같으면, 중복 확인 안해되 됨. ---의도*//
 import { useNavigate, useSearchParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";

@@ -19,6 +19,8 @@ export function BoardWrite() {
   const toast = useToast();
   const navigate = useNavigate();
 
+  // const myModule = require('./myModule');
+
   let submitt;
   function handleSubmit() {
     setIsSubmitting(true);
@@ -77,7 +79,7 @@ export function BoardWrite() {
         <Button
           isDisabled={isSubmitting}
           onClick={handleSubmit}
-          colorScheme="blue"
+          colorScheme="tomato"
         >
           저장
         </Button>

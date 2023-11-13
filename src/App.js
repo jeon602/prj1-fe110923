@@ -5,6 +5,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+
 import { BoardWrite } from "./page/board/BoardWrite";
 import { BoardList } from "./page/board/BoardList";
 import { HomeLayout } from "./layout/HomeLayout";
