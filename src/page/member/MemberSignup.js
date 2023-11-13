@@ -17,6 +17,8 @@ export function MemberSignup() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [stnickName, setNickNameAvailable] = useState("");
 
   const [idAvailable, setIdAvailable] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState(false);
@@ -41,6 +43,7 @@ export function MemberSignup() {
   if (password.length === 0) {
     submitAvailable = false;
   }
+
 
   function handleSubmit() {
     axios
@@ -162,6 +165,20 @@ export function MemberSignup() {
         />
         <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
       </FormControl>
+
+      <FormControl isInvalid={!nickname}>
+        <FormLabel>password 확인</FormLabel>
+        <Input
+          type="text"
+          value={nickName}
+          onChange={(e) => setNickName(e.target.value);
+        setNickName}
+        />
+        <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
+      </FormControl>
+
+
+
 
 
       <FormControl isInvalid={!emailAvailable}>
