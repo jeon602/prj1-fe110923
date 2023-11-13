@@ -5,7 +5,7 @@ import axios from "axios";
 
 export function MemberView() {
   const [member, setMember] = useState(null);
-  // /member ?id = userid
+  // /member ?id = userid 로 경로 이동하도록
   const [params] = useSearchParams();
   useEffect(() => {
     axios
