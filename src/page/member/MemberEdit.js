@@ -2,8 +2,8 @@
 //기존 이메일과 같거나 중복확인을 했거나
 //*email을 변경하면(작성시작하면. )중복 확인 다시 할 수 있도록 함
 //기존 이메일과 같으면, 중복 확인 안해되 됨. ---의도*//
-import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -12,18 +12,30 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 
 export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
   const [emailAvailable, setEmailAvailable] = useState(false);
-  const [password, setPassword] = useState();
 
   const toast = useToast();
   const [params] = useSearchParams();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("/api/member?" + params.toString()).then((response) => {
@@ -42,11 +54,18 @@ export function MemberEdit() {
   }
 
   let emailChecked = sameOriginEmail || emailAvailable;
+
   // 암호가 없으면 기존 암호
-  //암호 작성하면 새암호 암호 확인 체크
+  // 암호를 작성하면 새 암호, 암호확인 체크
+  let passwordChecked = false;
 
-  let passwordChecked = true;
+  if (passwordCheck === password) {
+    passwordChecked = true;
+  }
 
+  if (password.length === 0) {
+    passwordChecked = true;
+  }
 
   if (member === null) {
     return <Spinner />;
@@ -76,18 +95,55 @@ export function MemberEdit() {
       });
   }
 
+  function handleSubmit() {
+    // put /api/member/edit
+    // {id, password, email}
+
+    axios
+      .put("/api/member/edit", { id: member.id, password, email })
+      .then(() => {
+        toast({
+          description: "회원정보가 수정되었습니다.",
+          status: "success",
+        });
+        navigate("/member?" + params.toString());
+      })
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast({
+            description: "수정 권한이 없습니다.",
+            status: "error",
+          });
+        } else {
+          toast({
+            description: "수정중에 문제가 발생하였습니다.",
+            status: "error",
+          });
+        }
+      })
+      .finally(() => onClose());
+  }
+
   return (
     <Box>
       <h1>{id}님 정보 수정</h1>
       <FormControl>
         <FormLabel>password</FormLabel>
-        <Input type="text" />
+        <Input
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </FormControl>
-      password가 null이 아니고, length가 0보다 크면 &&
-      {(password/length>0 && (
+
+      {password.length > 0 && (
         <FormControl>
           <FormLabel>password 확인</FormLabel>
-          <Input type="text" />
+          <Input
+            type="text"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
+          />
         </FormControl>
       )}
 
@@ -109,7 +165,30 @@ export function MemberEdit() {
           </Button>
         </Flex>
       </FormControl>
-      <Button isDisabled={! emailChecked || !passwordChecked}>수정</Button>
+      <Button
+        isDisabled={!emailChecked || !passwordChecked}
+        colorScheme="blue"
+        onClick={onOpen}
+      >
+        수정
+      </Button>
+
+      {/* 수정 모달 */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>수정 확인</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>수정 하시겠습니까?</ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onClose}>닫기</Button>
+            <Button onClick={handleSubmit} colorScheme="blue">
+              수정
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
