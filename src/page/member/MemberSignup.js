@@ -17,13 +17,13 @@ export function MemberSignup() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [stnickName, setNickNameAvailable] = useState("");
 
   const [idAvailable, setIdAvailable] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState(false);
-  const [nickNanme, setNickNanme] = useState("");
-  const [nickNameAvailable,setNickNameAvilable]=useState(false);
+
+  const [nickName, setNickName] = useState("");
+  const [nickNameAvailable, setNickNameAvailable] = useState(false);
+
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ export function MemberSignup() {
     submitAvailable = false;
   }
 
-  if (password != passwordCheck) {
+  if (password !==passwordCheck) {
     submitAvailable = false;
   }
 
@@ -45,8 +45,8 @@ export function MemberSignup() {
     submitAvailable = false;
   }
 
-  if (!nickNameAvailable){
-    submitAvailable=false;
+  if (!nickNameAvailable) {
+    submitAvailable = false;
   }
 
   function handleSubmit() {
@@ -55,7 +55,7 @@ export function MemberSignup() {
         id,
         password,
         email,
-        nickName
+        nickName,
       })
       .then(() => {
         // toast
@@ -129,6 +129,7 @@ export function MemberSignup() {
         }
       });
   }
+
   function handleNickNameCheck() {
     const params = new URLSearchParams();
     params.set("nickName", nickName);
@@ -153,11 +154,9 @@ export function MemberSignup() {
       });
   }
 
-
   return (
     <Box>
       <h1>회원 가입</h1>
-
       <FormControl isInvalid={!idAvailable}>
         <FormLabel>id</FormLabel>
         <Flex>
@@ -172,8 +171,6 @@ export function MemberSignup() {
         </Flex>
         <FormErrorMessage>ID 중복체크를 해주세요.</FormErrorMessage>
       </FormControl>
-
-
       <FormControl isInvalid={password.length === 0}>
         <FormLabel>password</FormLabel>
         <Input
@@ -181,6 +178,7 @@ export function MemberSignup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <FormErrorMessage>암호를 입력해 주세요.</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={password !== passwordCheck}>
@@ -192,6 +190,7 @@ export function MemberSignup() {
         />
         <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
       </FormControl>
+
       <FormControl isInvalid={!nickNameAvailable}>
         <FormLabel>nick name</FormLabel>
         <Flex>
@@ -207,6 +206,7 @@ export function MemberSignup() {
         </Flex>
         <FormErrorMessage>nickName 중복 체크를 해주세요.</FormErrorMessage>
       </FormControl>
+
       <FormControl isInvalid={!emailAvailable}>
         <FormLabel>email</FormLabel>
         <Flex>
@@ -225,16 +225,10 @@ export function MemberSignup() {
       <Button
         isDisabled={!submitAvailable}
         onClick={handleSubmit}
-        colorScheme="blue">
+        colorScheme="blue"
+      >
         가입
       </Button>
-
-
-
-
-
-
-
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -19,7 +19,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {LoginContext} from "../../App";
+import { LoginContext } from "../../component/LogInProvider";
 
 export function BoardView() {
   const [board, setBoard] = useState(null);
@@ -29,7 +29,8 @@ export function BoardView() {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const{hasAccess, isAdmin} = useContext(LoginContext);
+
+  const { hasAccess, isAdmin } = useContext(LoginContext);
 
   useEffect(() => {
     axios
@@ -79,7 +80,8 @@ export function BoardView() {
         <FormLabel>작성일시</FormLabel>
         <Input value={board.inserted} readOnly />
       </FormControl>
-      {hasAccess(board.writer || isAdmin)&& (
+
+      {(hasAccess(board.writer) || isAdmin()) && (
         <Box>
           <Button colorScheme="purple" onClick={() => navigate("/edit/" + id)}>
             수정
@@ -89,6 +91,7 @@ export function BoardView() {
           </Button>
         </Box>
       )}
+
       {/* 삭제 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

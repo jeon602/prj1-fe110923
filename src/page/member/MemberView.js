@@ -32,7 +32,14 @@ export function MemberView() {
   useEffect(() => {
     axios
       .get("/api/member?" + params.toString())
-      .then((response) => setMember(response.data));
+      .then((response) => setMember(response.data))
+      .catch((error) => {
+        navigate("/login");
+        toast({
+          description: "권한이 없습니다.",
+          status: "warning",
+        });
+      });
   }, []);
 
   if (member === null) {
@@ -79,6 +86,10 @@ export function MemberView() {
       <FormControl>
         <FormLabel>password</FormLabel>
         <Input type="text" value={member.password} readOnly />
+      </FormControl>
+      <FormControl>
+        <FormLabel>별명</FormLabel>
+        <Input value={member.nickName} readOnly></Input>
       </FormControl>
       <FormControl>
         <FormLabel>email</FormLabel>
