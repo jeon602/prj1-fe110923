@@ -6,7 +6,7 @@ import { NavBar } from "../component/NavBar";
 export function HomeLayout() {
   return (
     <Box
-      color="yellowgreen"
+      color="palevioletred"
       w="900px"
       h="100px"
       margin="flex"
