@@ -166,13 +166,12 @@ export function MemberSignup() {
         <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={!nickname}>
+      <FormControl isInvalid={!nickName}>
         <FormLabel>password 확인</FormLabel>
         <Input
           type="text"
           value={nickName}
-          onChange={(e) => setNickName(e.target.value);
-        setNickName}
+          onChange={(e) => setNickName(e.target.value)}
         />
         <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
       </FormControl>
