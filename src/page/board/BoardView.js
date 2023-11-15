@@ -84,10 +84,10 @@ export function BoardView() {
 
       {(hasAccess(board.writer) || isAdmin()) && (
         <Box>
-          <Button colorScheme="purple" onClick={() => navigate("/edit/" + id)}>
+          <Button colorScheme="lemon" onClick={() => navigate("/edit/" + id)}>
             수정
           </Button>
-          <Button colorScheme="red" onClick={onOpen}>
+          <Button colorScheme="green" onClick={onOpen}>
             삭제
           </Button>
         </Box>
@@ -103,7 +103,7 @@ export function BoardView() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleDelete} colorScheme="red">
+            <Button onClick={handleDelete} colorScheme="tomato">
               삭제
             </Button>
           </ModalFooter>

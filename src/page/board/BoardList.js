@@ -34,10 +34,10 @@ export function BoardList() {
         <Table>
           <Thead>
             <Tr>
-              <Th>id</Th>
-              <Th>title</Th>
-              <Th>by</Th>
-              <Th>at</Th>
+              <Th>Id</Th>
+              <Th>Title</Th>
+              <Th>By</Th>
+              <Th>At</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -45,6 +45,7 @@ export function BoardList() {
               <Tr
                 _hover={{
                   cursor: "pointer",
+                  colorScheme: "tomato",
                 }}
                 key={board.id}
                 onClick={() => navigate("/board/" + board.id)}

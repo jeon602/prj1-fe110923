@@ -32,25 +32,25 @@ export function NavBar() {
 
   return (
     <Flex>
-      <Button onClick={() => navigate("/")}>home</Button>
+      <Button onClick={() => navigate("/")}>HOME</Button>
       {isAuthenticated() && (
-        <Button onClick={() => navigate("/write")}>write</Button>
+        <Button onClick={() => navigate("/write")}>Write</Button>
       )}
       {isAuthenticated() || (
-        <Button onClick={() => navigate("/signup")}>signup</Button>
+        <Button onClick={() => navigate("/signup")}>Join</Button>
       )}
       {isAdmin() && (
-        <Button onClick={() => navigate("/member/list")}>회원목록</Button>
+        <Button onClick={() => navigate("/member/list")}>MemberList</Button>
       )}
       {isAuthenticated() && (
         <Button onClick={() => navigate("/member?" + urlParams.toString())}>
-          회원정보
+          Member_Info
         </Button>
       )}
       {isAuthenticated() || (
-        <Button onClick={() => navigate("/login")}>로그인</Button>
+        <Button onClick={() => navigate("/login")}>LogIn</Button>
       )}
-      {isAuthenticated() && <Button onClick={handleLogout}>로그아웃</Button>}
+      {isAuthenticated() && <Button onClick={handleLogout}>LogOut</Button>}
     </Flex>
   );
 }
