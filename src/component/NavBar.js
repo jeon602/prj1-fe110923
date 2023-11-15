@@ -9,6 +9,11 @@ export function NavBar() {
 
   const toast = useToast();
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams();
+
+  if (login !== "") {
+    urlParams.set("id", login.id);
+  }
 
   function handleLogout() {
     axios
@@ -33,8 +38,12 @@ export function NavBar() {
         (<Button onClick={() => navigate("/signup")}>signup</Button>
         )}
       {isAdmin() &&
-        (
-          <Button onClick={() => navigate("/member/list")}>회원목록</Button>)}
+        (<Button onClick={() => navigate("/member/list")}>회원목록</Button>)}
+      {isAuthenticated() && (
+        <Button onClick={() => navigate("/member?" + urlParams.toString())}>
+          회원정보
+        </Button>
+      )}
       {isAuthenticated() ||
         (<Button onClick={() => navigate("/login")}>로그인</Button>
       )}
