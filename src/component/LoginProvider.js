@@ -38,8 +38,7 @@ function LoginProvider({children}) {
   }
   return (
     <LoginContext.Provider
-      value={{ login, fetchLogin, isAuthenticated ,hasAccess, isAdmin}}
-    >
+      value={{ login, fetchLogin, isAuthenticated ,hasAccess}}>
       {children}
       </LoginContext.Provider>
 
