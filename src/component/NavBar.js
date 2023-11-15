@@ -1,14 +1,21 @@
-import {Button, Flex, useToast} from "@chakra-ui/react";
-import {useNavigate} from "react-router-dom";
+import { Button, Flex, useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {useContext} from "react";
-import {LoginContext} from "../App";
+import { useContext } from "react";
+import { LoginContext } from "./LogInProvider";
 
 export function NavBar() {
-  const {fetchLogin, login, isAuthenticated,isAdmin} = useContext(LoginContext);
-
+  const { fetchLogin, login, isAuthenticated, isAdmin } =
+    useContext(LoginContext);
   const toast = useToast();
+
   const navigate = useNavigate();
+
+  const urlParams = new URLSearchParams();
+
+  if (login !== "") {
+    urlParams.set("id", login.id);
+  }
 
   function handleLogout() {
     axios
@@ -29,18 +36,21 @@ export function NavBar() {
       {isAuthenticated() && (
         <Button onClick={() => navigate("/write")}>write</Button>
       )}
-      {isAuthenticated() ||
-        (<Button onClick={() => navigate("/signup")}>signup</Button>
-        )}
-      {isAdmin() &&
-        (
-          <Button onClick={() => navigate("/member/list")}>회원목록</Button>)}
-      {isAuthenticated() ||
-        (<Button onClick={() => navigate("/login")}>로그인</Button>
+      {isAuthenticated() || (
+        <Button onClick={() => navigate("/signup")}>signup</Button>
       )}
-      {isAuthenticated() &&
-        (<Button onClick={handleLogout}>로그아웃</Button>
+      {isAdmin() && (
+        <Button onClick={() => navigate("/member/list")}>회원목록</Button>
       )}
+      {isAuthenticated() && (
+        <Button onClick={() => navigate("/member?" + urlParams.toString())}>
+          회원정보
+        </Button>
+      )}
+      {isAuthenticated() || (
+        <Button onClick={() => navigate("/login")}>로그인</Button>
+      )}
+      {isAuthenticated() && <Button onClick={handleLogout}>로그아웃</Button>}
     </Flex>
   );
 }

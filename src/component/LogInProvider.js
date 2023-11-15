@@ -1,9 +1,8 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
+
 export const LoginContext = createContext(null);
-
-function LoginProvider({children}) {
-
+function LogInProvider({ children }) {
   const [login, setLogin] = useState("");
 
   useEffect(() => {
@@ -19,12 +18,15 @@ function LoginProvider({children}) {
   function isAuthenticated() {
     return login !== "";
   }
+
   function isAdmin() {
     if (login.auth) {
-      return login.auth.some((elem) => elem.name === "admin")
+      return login.auth.some((elem) => elem.name === "admin");
     }
+
     return false;
   }
+
   // function isManager() {
   //   return login.auth.some((elem) => elem.name === "manager");
   // }
@@ -33,16 +35,16 @@ function LoginProvider({children}) {
   //   return login.auth.some((elem) => elem.name === auth);
   // }
 
-  function hasAccess(useId){
-    return login.id === useId;
+  function hasAccess(userId) {
+    return login.id === userId;
   }
   return (
     <LoginContext.Provider
-      value={{ login, fetchLogin, isAuthenticated ,hasAccess}}>
+      value={{ login, fetchLogin, isAuthenticated, hasAccess, isAdmin}}
+    >
       {children}
-      </LoginContext.Provider>
-
-      );
+    </LoginContext.Provider>
+  );
 }
 
-export default LoginProvider;
+export default LogInProvider;
