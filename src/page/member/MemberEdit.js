@@ -124,7 +124,7 @@ export function MemberEdit() {
           });
         } else {
           toast({
-            description: "수정중에 문제가 발생하였습니다.",
+            description: "수정 중에 문제가 발생하였습니다.",
             status: "error",
           });
         }
@@ -233,7 +233,7 @@ export function MemberEdit() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleSubmit} colorScheme="blue">
+            <Button onClick={handleSubmit} colorScheme="lemon">
               수정
             </Button>
           </ModalFooter>

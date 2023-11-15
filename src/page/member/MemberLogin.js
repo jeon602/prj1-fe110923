@@ -56,7 +56,7 @@ export function MemberLogin() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </FormControl>
-      <Button colorScheme="blue" onClick={handleLogin}>
+      <Button colorScheme="pink" onClick={handleLogin}>
         로그인
       </Button>
     </Box>
