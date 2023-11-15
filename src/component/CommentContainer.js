@@ -17,13 +17,13 @@ import {
   StackDivider,
   Text,
   Textarea,
-  useDisclosure, useToast,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import { DeleteIcon } from "@chakra-ui/icons";
+import {DeleteIcon} from "@chakra-ui/icons";
 import {LoginContext} from "./LogInProvider";
-import {errors} from "immer/src/utils/errors";
 
 function CommentForm({ boardId, isSubmitting, onSubmit }) {
   const [comment, setComment] = useState("");
@@ -43,7 +43,9 @@ function CommentForm({ boardId, isSubmitting, onSubmit }) {
 }
 
 function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
-  const {hasAccess}= useContect(LoginContext);
+  const {hasAccess}= useContext(LoginContext); //eslint-disable-line no-unused-vars
+
+
 
   return (
     <Card>
@@ -90,15 +92,19 @@ export function CommentContainer({ boardId }) {
 
 
   useEffect(() => {
-    if (!isSubmitting) {
-      const params = new URLSearchParams();
-      params.set("id", boardId);
+      if (!isSubmitting) {
+        const params = new URLSearchParams();
+        params.set("id", boardId);
 
-      axios
-        .get("/api/comment/list?" + params)
-        .then((response) => setCommentList(response.data));
-    }
-  }, [isSubmitting]);
+        axios
+          .get("/api/comment/list?" + params)
+          .then((response) => setCommentList(response.data));
+      }
+    },// eslint-disable-next-line react-hooks/exhaustive-deps
+    [isSubmitting]);
+
+
+
 
   function handleSubmit(comment) {
     setIsSubmitting(true);
@@ -154,7 +160,7 @@ export function CommentContainer({ boardId }) {
     // id 를 어딘가 저장
     // setId(id);
     // 모달 열기
-    commemtIdRef.current=id;
+    commentIdRef.current=id;
     onOpen();
   }
   return (
