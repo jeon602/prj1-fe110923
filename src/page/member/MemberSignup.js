@@ -17,16 +17,16 @@ export function MemberSignup() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
-
+//
   const [idAvailable, setIdAvailable] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState(false);
-
+//
   const [nickName, setNickName] = useState("");
   const [nickNameAvailable, setNickNameAvailable] = useState(false);
-
+//
   const toast = useToast();
   const navigate = useNavigate();
-
+//
   let submitAvailable = true;
 
   if (!emailAvailable) {
@@ -36,11 +36,9 @@ export function MemberSignup() {
   if (!idAvailable) {
     submitAvailable = false;
   }
-
   if (password !==passwordCheck) {
     submitAvailable = false;
   }
-
   if (password.length === 0) {
     submitAvailable = false;
   }
@@ -70,7 +68,7 @@ export function MemberSignup() {
         // toast
         if (error.response.status === 400) {
           toast({
-            description: "입력값을 확인해주세요.",
+            description: "입력 값을 확인해주세요.",
             status: "error",
           });
         } else {
@@ -169,8 +167,9 @@ export function MemberSignup() {
           />
           <Button onClick={handleIdCheck}>중복확인</Button>
         </Flex>
-        <FormErrorMessage>ID 중복체크를 해주세요.</FormErrorMessage>
+        <FormErrorMessage> ID 중복체크를 해주세요.</FormErrorMessage>
       </FormControl>
+
       <FormControl isInvalid={password.length === 0}>
         <FormLabel>password</FormLabel>
         <Input
@@ -181,7 +180,7 @@ export function MemberSignup() {
 
         <FormErrorMessage>암호를 입력해 주세요.</FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={password !== passwordCheck}>
+      <FormControl isInvalid={password != passwordCheck}>
         <FormLabel>password 확인</FormLabel>
         <Input
           type="password"
@@ -225,7 +224,7 @@ export function MemberSignup() {
       <Button
         isDisabled={!submitAvailable}
         onClick={handleSubmit}
-        colorScheme="blue"
+        colorScheme="lemon"
       >
         가입
       </Button>

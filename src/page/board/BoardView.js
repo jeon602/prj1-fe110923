@@ -108,6 +108,7 @@ export function BoardView() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <CommentContainer boardId={id} />
     </Box>
   );
 }
