@@ -41,7 +41,7 @@ export function MemberEdit() {
       setMember(response.data);
       setEmail(response.data.email);
       setNickName(response.data.nickName);
-    });
+    }); // eslint-disable-next-line
   }, []);
 
   const id = params.get("id");
@@ -192,7 +192,7 @@ export function MemberEdit() {
             }}
           ></Input>
           <Button isDisabled={nickNameChecked} onClick={handleNickNameCheck}>
-            중복확인
+            check!
           </Button>
         </Flex>
       </FormControl>
