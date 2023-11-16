@@ -20,10 +20,10 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import {DeleteIcon} from "@chakra-ui/icons";
-import {LoginContext} from "./LogInProvider";
+import { DeleteIcon, EditIcon, NotAllowedIcon } from "@chakra-ui/icons";
+import { LoginContext } from "./LogInProvider";
 
 function CommentForm({ boardId, isSubmitting, onSubmit }) {
   const [comment, setComment] = useState("");
@@ -42,38 +42,94 @@ function CommentForm({ boardId, isSubmitting, onSubmit }) {
   );
 }
 
+function CommentItem({ comment, onDeleteModalOpen }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [commentEdited, setCommentEdited] = useState(comment.comment);
+
+  const { hasAccess } = useContext(LoginContext);
+
+  function handleSubmit() {
+    axios
+      .put("/api/comment/edit", { id: comment.id, comment: commentEdited })
+      .then(() => console.log("good"))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("done"));
+  }
+
+  return (
+    <Box>
+      <Flex justifyContent="space-between">
+        <Heading size="xs">{comment.memberId}</Heading>
+        <Text fontSize="xs">{comment.inserted}</Text>
+      </Flex>
+      <Flex justifyContent="space-between" alignItems="center">
+        <Box flex={1}>
+          <Text sx={{ whiteSpace: "pre-wrap" }} pt="2" fontSize="sm">
+            {comment.comment}
+          </Text>
+          {isEditing && (
+            <Box>
+              <Textarea
+                value={commentEdited}
+                onChange={(e) => setCommentEdited(e.target.value)}
+              />
+              <Button colorScheme="tomato" onClick={handleSubmit}>
+                저장
+              </Button>
+            </Box>
+          )}
+        </Box>
+
+        {hasAccess(comment.memberId) && (
+          <Box>
+            {isEditing || (
+              <Button
+                size="xs"
+                colorScheme="yellowgreen"
+                onClick={() => setIsEditing(true)}
+              >
+                <EditIcon />
+              </Button>
+            )}
+            {isEditing && (
+              <Button
+                size="xs"
+                colorScheme="tomato"
+                onClick={() => setIsEditing(false)}
+              >
+                <NotAllowedIcon />
+              </Button>
+            )}
+            <Button
+              onClick={() => onDeleteModalOpen(comment.id)}
+              size="xs"
+              colorScheme="yellowgreen"
+            >
+              <DeleteIcon />
+            </Button>
+          </Box>
+        )}
+      </Flex>
+    </Box>
+  );
+}
+
 function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
-  const {hasAccess}= useContext(LoginContext); //eslint-disable-line no-unused-vars
-
-
+  const { hasAccess } = useContext(LoginContext);
 
   return (
     <Card>
       <CardHeader>
-        <Heading size="md">Comment List</Heading>
+        <Heading size="md">댓글 리스트</Heading>
       </CardHeader>
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           {commentList.map((comment) => (
-            <Box key={comment.id}>
-              <Flex justifyContent="space-between">
-                <Heading size="xs">{comment.memberId}</Heading>
-                <Text fontSize="xs">{comment.inserted}</Text>
-              </Flex>
-              <Flex justifyContent="space-between" alignItems="center">
-                <Text sx={{ whiteSpace: "pre-wrap" }} pt="2" fontSize="sm">
-                  {comment.comment}
-                </Text>
-                <Button
-                  isDisabled={isSubmitting}
-                  onClick={() => onDeleteModalOpen(comment.id)}
-                  size="xs"
-                  colorScheme="tomato"
-                >
-                  <DeleteIcon />
-                </Button>
-              </Flex>
-            </Box>
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              onDeleteModalOpen={onDeleteModalOpen}
+            />
           ))}
         </Stack>
       </CardBody>
@@ -84,83 +140,82 @@ function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
 export function CommentContainer({ boardId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [commentList, setCommentList] = useState([]);
-  const { isOpen, onClose, onOpen } = useDisclosure()
-  const commentIdRef  = useRef(0);
 
-  const {isAuthenticated} = useContext(LoginContext);
-  const toast= useToast();
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
+  // const [id, setId] = useState(0);
+  // useRef : 컴포넌트에서 임시로 값을 저장하는 용도로 사용
+  const commentIdRef = useRef(0);
+
+  const { isAuthenticated } = useContext(LoginContext);
+
+  const toast = useToast();
 
   useEffect(() => {
-      if (!isSubmitting) {
-        const params = new URLSearchParams();
-        params.set("id", boardId);
+    if (!isSubmitting) {
+      const params = new URLSearchParams();
+      params.set("id", boardId);
 
-        axios
-          .get("/api/comment/list?" + params)
-          .then((response) => setCommentList(response.data));
-      }
-    },// eslint-disable-next-line react-hooks/exhaustive-deps
-    [isSubmitting]);
-
-
-
+      axios
+        .get("/api/comment/list?" + params)
+        .then((response) => setCommentList(response.data));
+    }
+  }, [isSubmitting]);
 
   function handleSubmit(comment) {
     setIsSubmitting(true);
+
     axios
       .post("/api/comment/add", comment)
-      .then(()=> {
+      .then(() => {
         toast({
-          description: "댓글 등록 완료.",
-          status:"success",
+          description: "댓글이 등록되었습니다.",
+          status: "success",
         });
       })
-      .catch((error)=> {
-        toast({description:"등록을 다시 시도해주십시오.",
-        status:"error",
+      .catch((error) => {
+        toast({
+          description: "댓글 등록 중 문제가 발생하였습니다.",
+          status: "error",
         });
       })
       .finally(() => setIsSubmitting(false));
   }
 
   function handleDelete() {
-    // console.log(id + "번 댓글 삭제");
-    // TODO: 모달, then, catch, finally
-
     setIsSubmitting(true);
     axios
       .delete("/api/comment/" + commentIdRef.current)
-      .then(()=> {
+      .then(() => {
         toast({
-          description:"댓글이 삭제 되었습니다.",
-          status:"success",
+          description: "댓글이 삭제되었습니다.",
+          status: "success",
         });
       })
-      .catch((error)=> {
-        if (error.response.status === 401 || error.response.status === 403 ){
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
           toast({
-            description:"접근 권한이 없습니다.",
-            status:"warning",
+            description: "권한이 없습니다.",
+            status: "warning",
           });
-        }else {
+        } else {
           toast({
-            description:"댓글 삭제 중 문제가 발생했습니다.",
+            description: "댓글 삭제 중 문제가 발생했습니다.",
             status: "error",
           });
         }
       })
       .finally(() => {
-      onClose();
-      setIsSubmitting(false);
-    });
+        onClose();
+        setIsSubmitting(false);
+      });
   }
 
   function handleDeleteModalOpen(id) {
     // id 를 어딘가 저장
     // setId(id);
+    commentIdRef.current = id;
     // 모달 열기
-    commentIdRef.current=id;
     onOpen();
   }
   return (
@@ -194,7 +249,7 @@ export function CommentContainer({ boardId }) {
               onClick={handleDelete}
               colorScheme="tomato"
             >
-              Delete
+              삭제
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -202,134 +257,3 @@ export function CommentContainer({ boardId }) {
     </Box>
   );
 }
-//my code understage
-// import {
-//   Box,
-//   Button,
-//   Card,
-//   CardBody,
-//   CardHeader,
-//   Flex,
-//   Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
-//   Stack,
-//   StackDivider,
-//   Text,
-//   Textarea, useDisclosure,
-// } from "@chakra-ui/react";
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-//
-// function CommentForm({ boardId, isSubmitting, onSubmit }) {
-//   const [comment, setComment] = useState("");
-//
-//   function handleSubmit() {
-//     onSubmit({ boardId, comment });
-//   }
-//
-//   return (
-//     <Box>
-//       <Textarea value={comment} onChange={(e) => setComment(e.target.value)} />
-//       <Button isDisabled={isSubmitting} onClick={handleSubmit}>
-//         쓰기
-//       </Button>
-//     </Box>
-//   );
-// }
-//
-// function CommentList({ CommentList, onDelete, isSubmitting }) {
-//   const [CommentList, setCommentList] = useState(false);
-//
-//   useEffect(() => {
-//     const params = new URLSearchParams();
-//     params.set("id", boardId);
-//
-//     axios
-//       .get("/api/comment/list?" + params)
-//       .then((response) => setCommentList(response.data));
-//   }, [isSubmitting]);
-//
-//   return (
-//     <Card>
-//       <CardHeader>
-//         <Heading size="md">댓글 리스트</Heading>
-//       </CardHeader>
-//       <CardBody>
-//         <Stack divider={<StackDivider />} spacing="4">
-//           {/* TODO: 댓글 작성 후 re render */}
-//           {commentList.map((comment) => (
-//             <Box>
-//               <Flex justifyContent="space-between">
-//                 <Heading size="xs">{comment.memberId}</Heading>
-//                 <Text fontSize="xs">{comment.inserted}</Text>
-//               </Flex>
-//               <Text sx={{ whiteSpace: "pre-wrap" }} pt="2" fontSize="sm">
-//                 {comment.comment}
-//               </Text>
-//             </Box>
-//           ))}
-//         </Stack>
-//       </CardBody>
-//     </Card>
-//   );
-// }
-//
-// export function CommentContainer({ boardId }) {
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [CommentList, setCommentList]=useState();
-//   const {isOpen,onClose,onOpen }=useDisclosure();
-//
-//   function handleSubmit(comment) {
-//     setIsSubmitting(true);
-//     axios.delete()
-//
-//     axios
-//       .post("/api/comment/add", comment)
-//       .finally(() => setIsSubmitting(false));
-//
-//   }
-//
-//   function handleDelete() {
-//
-//   }
-//
-//   function handleDeleteModalOpen(id) {
-//     setId(id);
-//     // 아이디를 어딘가에 저장하고 , 모달을 열고 onOpen
-//     onOpen();
-//   }
-//
-//   return (
-//     <Box>
-//       <CommentForm
-//         boardId={boardId}
-//         isSubmitting={isSubmitting}
-//         onSubmit={handleSubmit}
-//         onDeleteModalOpen={handleDeleteModalOpen}
-//       />
-//       <CommentList boardId={boardId} ComentList={CommentList}/>
-//       <Modal isOpen={isOpen} onClose={onClose}>
-//         <ModalOverlay />
-//         <ModalContent>
-//           <ModalHeader>삭제 확인</ModalHeader>
-//           <ModalCloseButton />
-//           <ModalBody>삭제 하시겠습니까?</ModalBody>
-//
-//           <ModalFooter>
-//             <Button onClick={onClose}>닫기</Button>
-//             <Button onClick={handleDelete} colorScheme="red">
-//               삭제
-//             </Button>
-//           </ModalFooter>
-//         </ModalContent>
-//       </Modal>
-//     </Box>
-//   );
-// }
-// useRef : component에서 use를 임시로 저장하는 용도로 사용
-// state로 해도 되지만 렌더링을 유도하며 (별차이가 없다)
-// useRef에서 어떤일을 해야 하는 상태라면 usestate를 사용해도 큰 문제가 없다
-// 예외적으로 언제 사용하면 안되느냐ㅣ 렌더링 하는 동안 (순서대로 실행되는 동안) current값에 변동사항을 주거나
-//언제 쓰느냐 이벤트 핸들러 메소드 안에서 변경되는 것이 있거나 할 때
-// useState 와 useRef ,,,,
-// commit message useRef로 댓글 id 임시 저장
-//next finally /////
