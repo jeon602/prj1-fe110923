@@ -5,13 +5,7 @@ import { NavBar } from "../component/NavBar";
 
 export function HomeLayout() {
   return (
-    <Box
-      color="palevioletred"
-      w="900px"
-      h="100px"
-      margin="flex"
-      position="center"
-    >
+    <Box>
       <NavBar />
       <Outlet />
     </Box>

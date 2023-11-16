@@ -5,7 +5,14 @@ import {useContext, useEffect} from "react";
 import { LoginContext } from "./LogInProvider";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope} from "@fortawesome/free-regular-svg-icons";
-import {faRightFromBracket, faRightToBracket, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faRightFromBracket,
+  faRightToBracket,
+  faUser,
+  faUserPlus,
+  faUsers
+} from "@fortawesome/free-solid-svg-icons";
 
 export function NavBar() {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
