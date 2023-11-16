@@ -52,7 +52,7 @@ export function BoardWrite() {
 
   return (
     <Box>
-      <h1>게시물 작성</h1>
+      <h2>게시물 작성</h2>
       <Box>
         <FormControl>
           <FormLabel>제목</FormLabel>
