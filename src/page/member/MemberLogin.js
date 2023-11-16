@@ -36,9 +36,6 @@ export function MemberLogin() {
           status: "warning",
         });
       })
-      .finally(() => {
-        fetchLogin();
-      });
   }
 
   return (
