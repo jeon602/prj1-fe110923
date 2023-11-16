@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { LoginContext } from "../../component/LogInProvider";
 import { CommentContainer } from "../../component/CommentContainer";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart} from "@fortawesome/free-regular-svg-icons";
 
 export function BoardView() {
@@ -67,7 +68,7 @@ export function BoardView() {
     axios.post("/api/like",{boardId: board.id})
       .then(()=>console.log("GOOD"))
       .catch(()=>console.log("bad"))
-      .finally(()=>)
+      .finally(()=>console.log("dome"));
   }
 
   return (
@@ -75,30 +76,29 @@ export function BoardView() {
       <Flex justifyContent="space-between">
       <Heading size="xl">{board.id}번 글 보기</Heading>
       <Button variant="ghost" size="xl" onClick={handleLike}>
-
         <FontAwesomeIcon icon={faHeart} size="xl"/>
       </Button>
       </Flex>
       <FormControl>
-        <FormLabel>제목</FormLabel>
+        <FormLabel>Title</FormLabel>
         <Input value={board.title} readOnly />
       </FormControl>
       <FormControl>
-        <FormLabel>본문</FormLabel>
+        <FormLabel>Content</FormLabel>
         <Textarea value={board.content} readOnly />
       </FormControl>
       <FormControl>
-        <FormLabel>작성자</FormLabel>
+        <FormLabel>Writer</FormLabel>
         <Input value={board.nickName} readOnly />
       </FormControl>
       <FormControl>
-        <FormLabel>작성일시</FormLabel>
+        <FormLabel>DateTime</FormLabel>
         <Input value={board.inserted} readOnly />
       </FormControl>
 
       {(hasAccess(board.writer) || isAdmin()) && (
         <Box>
-          <Button colorScheme="lemon" onClick={() => navigate("/edit/" + id)}>
+          <Button colorScheme="yellowgreen" onClick={() => navigate("/edit/" + id)}>
             수정
           </Button>
           <Button colorScheme="green" onClick={onOpen}>
