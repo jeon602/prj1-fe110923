@@ -157,6 +157,7 @@ function CommentList({
                        isSubmitting,
                        setIsSubmitting,
                      }) {
+  // eslint-disable-next-line
   const { hasAccess } = useContext(LoginContext);
 
   return (
@@ -203,7 +204,7 @@ export function CommentContainer({ boardId }) {
       axios
         .get("/api/comment/list?" + params)
         .then((response) => setCommentList(response.data));
-    }
+    } // eslint-disable-next-line
   }, [isSubmitting]);
 
   function handleSubmit(comment) {
