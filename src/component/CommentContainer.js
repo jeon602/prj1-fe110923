@@ -292,7 +292,7 @@ export function CommentContainer({ boardId }) {
             <Button
               isDisabled={isSubmitting}
               onClick={handleDelete}
-              colorScheme="red"
+              colorScheme="yellowgreen"
             >
               삭제
             </Button>

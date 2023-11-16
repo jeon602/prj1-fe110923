@@ -233,7 +233,7 @@ export function MemberEdit() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleSubmit} colorScheme="lemon">
+            <Button onClick={handleSubmit} colorScheme="gray">
               수정
             </Button>
           </ModalFooter>
