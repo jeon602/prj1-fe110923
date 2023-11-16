@@ -50,16 +50,11 @@ function CommentItem({
                      }) {
   const [isEditing, setIsEditing] = useState(false);
   const [commentEdited, setCommentEdited] = useState(comment.comment);
-
   const { hasAccess } = useContext(LoginContext);
-
   const toast = useToast();
 
   function handleSubmit() {
-    // TODO : 응답 코드에 따른 기능들
-
     setIsSubmitting(true);
-
     axios
       .put("/api/comment/edit", { id: comment.id, comment: commentEdited })
       .then(() => {
@@ -122,7 +117,7 @@ function CommentItem({
             {isEditing || (
               <Button
                 size="xs"
-                colorScheme="purple"
+                colorScheme="tomato"
                 onClick={() => setIsEditing(true)}
               >
                 <EditIcon />
@@ -131,7 +126,7 @@ function CommentItem({
             {isEditing && (
               <Button
                 size="xs"
-                colorScheme="gray"
+                colorScheme="pink"
                 onClick={() => setIsEditing(false)}
               >
                 <NotAllowedIcon />
@@ -140,7 +135,7 @@ function CommentItem({
             <Button
               onClick={() => onDeleteModalOpen(comment.id)}
               size="xs"
-              colorScheme="red"
+              colorScheme="yellowgreen"
             >
               <DeleteIcon />
             </Button>
@@ -166,7 +161,7 @@ function CommentList({
         <Heading size="md">댓글 리스트</Heading>
       </CardHeader>
       <CardBody>
-        <Stack divider={<StackDivider />} spacing="4">
+        <Stack divider={<StackDivider />} spacing="5">
           {commentList.map((comment) => (
             <CommentItem
               key={comment.id}
@@ -185,16 +180,13 @@ function CommentList({
 export function CommentContainer({ boardId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [commentList, setCommentList] = useState([]);
-
   const { isOpen, onClose, onOpen } = useDisclosure();
-
   // const [id, setId] = useState(0);
   // useRef : 컴포넌트에서 임시로 값을 저장하는 용도로 사용
   const commentIdRef = useRef(0);
-
   const { isAuthenticated } = useContext(LoginContext);
-
   const toast = useToast();
+
   useEffect(() => {
     if (!isSubmitting) {
       const params = new URLSearchParams();

@@ -21,13 +21,21 @@ const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<HomeLayout />}>
       <Route index element={<BoardList />} />
+
       <Route path="write" element={<BoardWrite />} />
+
       <Route path="board/:id" element={<BoardView />} />
+
       <Route path="edit/:id" element={<BoardEdit />} />
+
       <Route path="signup" element={<MemberSignup />} />
+
       <Route path="member/list" element={<MemberList />} />
+
       <Route path="member" element={<MemberView />} />
+
       <Route path="member/edit" element={<MemberEdit />} />
+
       <Route path="login" element={<MemberLogin />} />
     </Route>,
   ),
