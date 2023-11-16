@@ -35,7 +35,7 @@ export function MemberLogin() {
           description: "아이디와 암호를 다시 확인해주세요.",
           status: "warning",
         });
-      })
+      });
   }
 
   return (

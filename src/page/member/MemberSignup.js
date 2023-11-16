@@ -156,7 +156,7 @@ export function MemberSignup() {
 
   return (
     <Box>
-      <h1>회원 가입</h1>
+      <h2>회원 가입</h2>
       <FormControl isInvalid={!idAvailable}>
         <FormLabel>id</FormLabel>
         <Flex>
