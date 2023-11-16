@@ -113,7 +113,7 @@ export function BoardEdit() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleSubmit} colorScheme="blue">
+            <Button onClick={handleSubmit} colorScheme="green">
               저장
             </Button>
           </ModalFooter>
