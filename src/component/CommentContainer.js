@@ -195,7 +195,6 @@ export function CommentContainer({ boardId }) {
   const { isAuthenticated } = useContext(LoginContext);
 
   const toast = useToast();
-
   useEffect(() => {
     if (!isSubmitting) {
       const params = new URLSearchParams();
@@ -204,7 +203,7 @@ export function CommentContainer({ boardId }) {
       axios
         .get("/api/comment/list?" + params)
         .then((response) => setCommentList(response.data));
-    } // eslint-disable-next-line
+    }// eslint-disable-next-line
   }, [isSubmitting]);
 
   function handleSubmit(comment) {
