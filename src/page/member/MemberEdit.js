@@ -217,7 +217,7 @@ export function MemberEdit() {
       </FormControl>
       <Button
         isDisabled={!emailChecked || !passwordChecked || !nickNameChecked}
-        colorScheme="blue"
+        colorScheme="tomato"
         onClick={onOpen}
       >
         수정
