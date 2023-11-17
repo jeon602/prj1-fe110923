@@ -29,10 +29,8 @@ export function MemberEdit() {
   const [emailAvailable, setEmailAvailable] = useState(false);
   const [nickName, setNickName] = useState("");
   const [nickNameAvailable, setNickNameAvailable] = useState(false);
-
   const toast = useToast();
   const [params] = useSearchParams();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
@@ -78,7 +76,9 @@ export function MemberEdit() {
   if (member === null) {
     return <Spinner />;
   }
-
+  // --------------------------------------------------------------------------------------------------------------
+  {/* handleEmail_ Check : 이메일 중복 체크*/}
+  // --------------------------------------------------------------------------------------------------------------
   function handleEmailCheck() {
     const params = new URLSearchParams();
     params.set("email", email);
@@ -102,7 +102,9 @@ export function MemberEdit() {
         }
       });
   }
-
+  // --------------------------------------------------------------------------------------------------------------
+  {/*     hadleSubmit : 입력창 : 회원  정보 수정 --------------------------------------------------*/}
+  // --------------------------------------------------------------------------------------------------------------
   function handleSubmit() {
     // put /api/member/edit
     // {id, password, email, nickName}
@@ -131,7 +133,9 @@ export function MemberEdit() {
       })
       .finally(() => onClose());
   }
-
+  // --------------------------------------------------------------------------------------------------------------
+                                    {/* handleNickNamecheck   : 닉네임 중복 체크 */}
+  // --------------------------------------------------------------------------------------------------------------
   function handleNickNameCheck() {
     const params = new URLSearchParams();
     params.set("nickName", nickName);
@@ -155,7 +159,9 @@ export function MemberEdit() {
         }
       });
   }
+  // --------------------------------------------------------------------------------------------------------------
 
+  // --------------------------------------------------------------------------------------------------------------
   return (
     <Box>
       <h1>{id}님 정보 수정</h1>
@@ -222,7 +228,7 @@ export function MemberEdit() {
       >
         수정
       </Button>
-
+{/*-----------------|   수정 모달 ㅣ ----------------------------------------------------------------*/}
       {/* 수정 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

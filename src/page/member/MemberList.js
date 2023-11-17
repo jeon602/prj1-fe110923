@@ -37,11 +37,11 @@ export function MemberList() {
       <Table>
         <Thead>
           <Tr>
-            <Th>id</Th>
-            <Th>pw</Th>
-            <Th>별명</Th>
-            <Th>email</Th>
-            <Th>가입일시</Th>
+            <Th>ID</Th>
+            <Th>PW</Th>
+            <Th>aka</Th>
+            <Th>E-mail</Th>
+            <Th>Date of Registration</Th>
           </Tr>
         </Thead>
         <Tbody>

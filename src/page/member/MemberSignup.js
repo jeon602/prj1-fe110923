@@ -70,7 +70,7 @@ export function MemberSignup() {
         // toast
         if (error.response.status === 400) {
           toast({
-            description: "입력값을 확인해주세요.",
+            description: "입력 값을 확인해주세요.",
             status: "error",
           });
         } else {

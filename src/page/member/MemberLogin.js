@@ -14,7 +14,6 @@ import { LoginContext } from "../../component/LogInProvider";
 export function MemberLogin() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
   const toast = useToast();
 

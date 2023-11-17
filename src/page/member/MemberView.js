@@ -67,7 +67,7 @@ export function MemberView() {
       .catch((error) => {
         if (error.response.status === 401 || error.response.status === 403) {
           toast({
-            description: "권한이 없습니다.",
+            description: "접근 권한이 없습니다.",
             status: "error",
           });
         } else {
