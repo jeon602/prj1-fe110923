@@ -13,7 +13,8 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChatIcon } from "@chakra-ui/icons";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
@@ -32,15 +33,18 @@ export function BoardList() {
 
   return (
     <Box>
-      <h2>게시물 목록</h2>
+      <h1>게시물 목록</h1>
       <Box>
         <Table>
           <Thead>
             <Tr>
-              <Th>Id</Th>
-              <Th>Title</Th>
-              <Th>By</Th>
-              <Th>At</Th>
+              <Th>id</Th>
+              <Th>
+                <FontAwesomeIcon icon={faHeart} />
+              </Th>
+              <Th>title</Th>
+              <Th>by</Th>
+              <Th>at</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -48,23 +52,22 @@ export function BoardList() {
               <Tr
                 _hover={{
                   cursor: "pointer",
-                  colorScheme: "tomato",
                 }}
                 key={board.id}
                 onClick={() => navigate("/board/" + board.id)}
               >
                 <Td>{board.id}</Td>
-                {/*11월 16일 수정 16시 59분 */}
+                <Td>{board.countLike != 0 && board.countLike}</Td>
                 <Td>
-                {board.title}
-                  {board.countComment > 0 &&(
+                  {board.title}
+                  {board.countComment > 0 && (
                     <Badge>
-                      <ChatIcon/>
+                      <ChatIcon />
                       {board.countComment}
                     </Badge>
                   )}
                 </Td>
-                  <Td>{board.nickName}</Td>
+                <Td>{board.nickName}</Td>
                 <Td>{board.inserted}</Td>
               </Tr>
             ))}
