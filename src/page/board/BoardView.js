@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {
   Box,
-  Button, Flex,
+  Button,
+  Flex,
   FormControl,
-  FormLabel, Heading,
+  FormLabel,
+  Heading,
   Input,
   Modal,
   ModalBody,
@@ -16,24 +18,39 @@ import {
   ModalOverlay,
   Spinner,
   Textarea,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { LoginContext } from "../../component/LogInProvider";
-import { CommentContainer } from "../../component/CommentContainer";
+import {LoginContext} from "../../component/LogInProvider";
+import {CommentContainer} from "../../component/CommentContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart} from "@fortawesome/free-regular-svg-icons";
 
+function LikeContainer(like, onClick) {
+  if (like === null) {
+    return <Spinner/>
+  }
+  return (
+    <Button variant="ghost" size="xl" onClick={onClick}>
+      {/*<FontAwesomeIcon icon={faHeart} size="xl" />*/}
+      {like.like && <Text>꽉찬 하트</Text>}
+      {like.like || <Text>빈 하트</Text>}
+      <Text>{like.countLike}</Text>
+    </Button>);
+}
+
 export function BoardView() {
   const [board, setBoard] = useState(null);
+  const [like, setLike] = useState(null); //
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { id } = useParams();
+  const {id} = useParams();
 
-  const { hasAccess, isAdmin } = useContext(LoginContext);
+  const {hasAccess, isAdmin} = useContext(LoginContext);
 
   useEffect(() => {
     axios
@@ -41,8 +58,15 @@ export function BoardView() {
       .then((response) => setBoard(response.data));
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("/api/like/board/" + id)
+      .then((response) => setLike(response.data));
+  }, []);
+
+
   if (board === null) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   function handleDelete() {
@@ -65,35 +89,34 @@ export function BoardView() {
   }
 
   function handleLike() {
-    axios.post("/api/like",{boardId: board.id})
-      .then(()=>console.log("GOOD"))
-      .catch(()=>console.log("bad"))
-      .finally(()=>console.log("dome"));
+    axios
+      .post("/api/like", {boardId: board.id})
+      .then((response)=> setLike(response.data))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("done"));
   }
 
   return (
     <Box>
       <Flex justifyContent="space-between">
-      <Heading size="xl">{board.id}번 글 보기</Heading>
-      <Button variant="ghost" size="xl" onClick={handleLike}>
-        <FontAwesomeIcon icon={faHeart} size="xl"/>
-      </Button>
+        <Heading size="xl">{board.id}번 글 보기</Heading>
+        <LikeContainer like={like} onClick={handleLike} />
       </Flex>
       <FormControl>
         <FormLabel>Title</FormLabel>
-        <Input value={board.title} readOnly />
+        <Input value={board.title} readOnly/>
       </FormControl>
       <FormControl>
         <FormLabel>Content</FormLabel>
-        <Textarea value={board.content} readOnly />
+        <Textarea value={board.content} readOnly/>
       </FormControl>
       <FormControl>
         <FormLabel>Writer</FormLabel>
-        <Input value={board.nickName} readOnly />
+        <Input value={board.nickName} readOnly/>
       </FormControl>
       <FormControl>
         <FormLabel>DateTime</FormLabel>
-        <Input value={board.inserted} readOnly />
+        <Input value={board.inserted} readOnly/>
       </FormControl>
 
       {(hasAccess(board.writer) || isAdmin()) && (
@@ -109,10 +132,10 @@ export function BoardView() {
 
       {/* 삭제 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay/>
         <ModalContent>
           <ModalHeader>삭제 확인</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton/>
           <ModalBody>삭제 하시겠습니까?</ModalBody>
 
           <ModalFooter>
@@ -123,7 +146,7 @@ export function BoardView() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <CommentContainer boardId={id} />
+      <CommentContainer boardId={id}/>
     </Box>
   );
 }
