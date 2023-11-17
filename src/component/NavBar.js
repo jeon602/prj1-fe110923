@@ -19,6 +19,7 @@ export function NavBar() {
     useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
+  let location = useLocation();
 //uselocation이 적당
   const urlParams = new URLSearchParams();
   useEffect(() => {

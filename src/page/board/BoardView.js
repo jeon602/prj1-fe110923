@@ -18,26 +18,30 @@ import {
   ModalOverlay,
   Spinner,
   Textarea,
-  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import {LoginContext} from "../../component/LogInProvider";
 import {CommentContainer} from "../../component/CommentContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHeart} from "@fortawesome/free-regular-svg-icons";
+import {faHeart as emptyHeart} from "@fortawesome/free-regular-svg-icons";
+import {faHeart as fullHeart} from "@fortawesome/free-solid-svg-icons";
 
-function LikeContainer(like, onClick) {
+function LikeContainer({like, onClick}) {
+  console.log(like);
   if (like === null) {
     return <Spinner/>
   }
   return (
-    <Button variant="ghost" size="xl" onClick={onClick}>
-      {/*<FontAwesomeIcon icon={faHeart} size="xl" />*/}
-      {like.like && <Text>꽉찬 하트</Text>}
-      {like.like || <Text>빈 하트</Text>}
-      <Text>{like.countLike}</Text>
-    </Button>);
+    <Flex gap={2}>
+      <Button variant="ghost" size="xl" onClick={onClick}>
+        {/*<FontAwesomeIcon icon={faHeart} size="xl" />*/}
+        {like.like && <FontAwesomeIcon icon={fullHeart} size="xl"/>}
+        {like.like || <FontAwesomeIcon icon={emptyHeart} size="xl"/>}
+      </Button>
+      <Heading sixe="lg">{like.countLike}</Heading>
+    </Flex>
+  );
 }
 
 export function BoardView() {
@@ -91,7 +95,7 @@ export function BoardView() {
   function handleLike() {
     axios
       .post("/api/like", {boardId: board.id})
-      .then((response)=> setLike(response.data))
+      .then((response) => setLike(response.data))
       .catch(() => console.log("bad"))
       .finally(() => console.log("done"));
   }
@@ -100,7 +104,7 @@ export function BoardView() {
     <Box>
       <Flex justifyContent="space-between">
         <Heading size="xl">{board.id}번 글 보기</Heading>
-        <LikeContainer like={like} onClick={handleLike} />
+        <LikeContainer like={like} onClick={handleLike}/>
       </Flex>
       <FormControl>
         <FormLabel>Title</FormLabel>
