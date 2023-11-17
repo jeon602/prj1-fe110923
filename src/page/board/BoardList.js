@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Badge,
   Box,
@@ -11,24 +11,24 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { ChatIcon } from "@chakra-ui/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {ChatIcon} from "@chakra-ui/icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHeart} from "@fortawesome/free-solid-svg-icons";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
-
+  const [params] = useSearchParams(); //분해 할당해서 보면 /p=2 . 로~~~
   const navigate = useNavigate();
-
+  // console.log(params.toString());
   useEffect(() => {
     axios
-      .get("/api/board/list")
+      .get("/api/board/list" + params)
       .then((response) => setBoardList(response.data));
   }, []);
 
   if (boardList === null) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   return (
@@ -40,7 +40,7 @@ export function BoardList() {
             <Tr>
               <Th>id</Th>
               <Th>
-                <FontAwesomeIcon icon={faHeart} />
+                <FontAwesomeIcon icon={faHeart}/>
               </Th>
               <Th>title</Th>
               <Th>by</Th>
@@ -62,13 +62,13 @@ export function BoardList() {
                   {board.title}
                   {board.countComment > 0 && (
                     <Badge>
-                      <ChatIcon />
+                      <ChatIcon/>
                       {board.countComment}
                     </Badge>
                   )}
                 </Td>
                 <Td>{board.nickName}</Td>
-                <Td>{board.inserted}</Td>
+                <Td>{board.ago}</Td>
               </Tr>
             ))}
           </Tbody>
