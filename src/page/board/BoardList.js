@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {
   Badge,
-  Box,
+  Box, list,
   Spinner,
   Table,
   Tbody,
@@ -15,12 +15,23 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {ChatIcon} from "@chakra-ui/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart} from "@fortawesome/free-solid-svg-icons";
+import {setSelectionRange} from "@testing-library/user-event/dist/utils";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
   const [params] = useSearchParams(); //분해 할당해서 보면 /p=2 . 로~~~
   const navigate = useNavigate();
-  // console.log(params.toString());
+  const Pagenation = ({totalPage, limit, page, setPage})=>{
+    const [currentPageArray,setCurrentPageArray ]=useState([]);
+    const [totalPageArray,setTotalPageArray ]=useState([]);
+    useEffect(() => {
+      if (page % limit ===1){
+        setCurrentPageArray(totalPageArray[Math.floor(page/limit)]);
+      }else  if (page % limit ===0){
+        setCurrentPageArray(totalPageArray[Math.floor(page/limit)-1]);
+      }
+    }, [page ]);
+  }
   useEffect(() => {
     axios
       .get("/api/board/list" + params)
