@@ -55,6 +55,7 @@ function CommentItem({
 
   function handleSubmit() {
     setIsSubmitting(true);
+
     axios
       .put("/api/comment/edit", { id: comment.id, comment: commentEdited })
       .then(() => {
@@ -158,7 +159,7 @@ function CommentList({
   return (
     <Card>
       <CardHeader>
-        <Heading size="md">댓글 리스트</Heading>
+        <Heading size="md" textStyle="inkFree">commet ....</Heading>
       </CardHeader>
       <CardBody>
         <Stack divider={<StackDivider />} spacing="5">
