@@ -74,6 +74,7 @@ export function BoardWrite() {
             multiple
             onChange={(e) => setFiles(e.target.files)}
           />
+          <FormHelperText>한 개의 파일은 1MB, 총 용량은 10 MB 크기 이내..</FormHelperText>
         </FormControl>
 
         <Button
