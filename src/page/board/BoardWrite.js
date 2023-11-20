@@ -52,7 +52,7 @@ export function BoardWrite() {
 
   return (
     <Box>
-      <h2>게시물 작성</h2>
+      <h1>게시물 작성</h1>
       <Box>
         <FormControl>
           <FormLabel>제목</FormLabel>
@@ -69,7 +69,7 @@ export function BoardWrite() {
         <Button
           isDisabled={isSubmitting}
           onClick={handleSubmit}
-          colorScheme="tomato"
+          colorScheme="blue"
         >
           저장
         </Button>

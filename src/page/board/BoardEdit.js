@@ -16,10 +16,11 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, {useEffect} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {useImmer} from "use-immer";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useImmer } from "use-immer";
 import axios from "axios";
+import { logDOM } from "@testing-library/react";
 
 export function BoardEdit() {
   const [board, updateBoard] = useImmer(null);
@@ -113,7 +114,7 @@ export function BoardEdit() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleSubmit} colorScheme="green">
+            <Button onClick={handleSubmit} colorScheme="blue">
               저장
             </Button>
           </ModalFooter>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Badge,
   Box,
@@ -14,9 +14,9 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import axios from "axios";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {ChatIcon} from "@chakra-ui/icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { ChatIcon } from "@chakra-ui/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
   faAngleRight,
@@ -24,9 +24,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import * as PropTypes from "prop-types";
 
-function PageButton({variant, pageNumber, children}) {
+function PageButton({ variant, pageNumber, children }) {
   const [params] = useSearchParams();
-  // console.log(params.toString());
   const navigate = useNavigate();
 
   function handleClick() {
@@ -34,12 +33,14 @@ function PageButton({variant, pageNumber, children}) {
     navigate("/?" + params);
   }
 
-  return <Button variant={variant} onClick={handleClick}>{children}</Button>;
+  return (
+    <Button variant={variant} onClick={handleClick}>
+      {children}
+    </Button>
+  );
+}
 
-}//requestparameter를 useSearchParams사용해야 함
-
-
-function Pagination({pageInfo}) {
+function Pagination({ pageInfo }) {
   const pageNumbers = [];
 
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ function Pagination({pageInfo}) {
           variant="ghost"
           onClick={() => navigate("/?p=" + pageInfo.prevPageNumber)}
         >
-          <FontAwesomeIcon icon={faAngleLeft}/>
+          <FontAwesomeIcon icon={faAngleLeft} />
         </Button>
       )}
 
@@ -76,7 +77,7 @@ function Pagination({pageInfo}) {
           variant="ghost"
           onClick={() => navigate("/?p=" + pageInfo.nextPageNumber)}
         >
-          <FontAwesomeIcon icon={faAngleRight}/>
+          <FontAwesomeIcon icon={faAngleRight} />
         </Button>
       )}
     </Box>
@@ -97,7 +98,7 @@ function SearchComponent() {
 
   return (
     <Flex>
-      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
+      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
       <Button onClick={handleSearch}>검색</Button>
     </Flex>
   );
@@ -110,7 +111,7 @@ export function BoardList() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
-//
+
   useEffect(() => {
     axios.get("/api/board/list?" + params).then((response) => {
       setBoardList(response.data.boardList);
@@ -119,7 +120,7 @@ export function BoardList() {
   }, [location]);
 
   if (boardList === null) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   return (
@@ -131,7 +132,7 @@ export function BoardList() {
             <Tr>
               <Th>id</Th>
               <Th>
-                <FontAwesomeIcon icon={faHeart}/>
+                <FontAwesomeIcon icon={faHeart} />
               </Th>
               <Th>title</Th>
               <Th>by</Th>
@@ -153,7 +154,7 @@ export function BoardList() {
                   {board.title}
                   {board.countComment > 0 && (
                     <Badge>
-                      <ChatIcon/>
+                      <ChatIcon />
                       {board.countComment}
                     </Badge>
                   )}
@@ -166,8 +167,8 @@ export function BoardList() {
         </Table>
       </Box>
 
-      <SearchComponent/>
-      <Pagination pageInfo={pageInfo}/>
+      <SearchComponent />
+      <Pagination pageInfo={pageInfo} />
     </Box>
   );
 }

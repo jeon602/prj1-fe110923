@@ -159,7 +159,7 @@ function CommentList({
   return (
     <Card>
       <CardHeader>
-        <Heading size="md" textStyle="inkFree">commet ....</Heading>
+        <Heading size="md" textStyle="inkFree">comment ....</Heading>
       </CardHeader>
       <CardBody>
         <Stack divider={<StackDivider />} spacing="5">
