@@ -110,20 +110,26 @@ export function BoardView() {
         <Heading size="xl" bg="tomato" w="auto">Number.{board.id}</Heading>
         <LikeContainer like={like} onClick={handleLike} justifyContent=""/>
       </Flex>
+
       <FormControl >
         <FormLabel>Title</FormLabel>
         <Input value={board.title} readOnly/>
       </FormControl>
+
       <FormControl>
         <FormLabel>내용</FormLabel>
         <Textarea value={board.content} readOnly/>
       </FormControl>
+
       {/*이미지 출력*/}
       {board.files.map((file) => (
         <Box key={file.id} my= "5px" boarder="3px solid navy">
           <Image width="400px" src={file.url} alt={file.name} justifyContent="center"/>
       </Box>
       ))}
+
+
+
       <FormControl>
         <FormLabel>작성자</FormLabel>
         <Input value={board.nickName} readOnly/>
