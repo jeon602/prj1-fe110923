@@ -81,10 +81,7 @@ export function BoardWrite() {
         <Button
           isDisabled={isSubmitting}
           onClick={handleSubmit}
-          colorScheme="orange"
-
-
-
+          colorScheme="yellowgreen"
         >
           저장
         </Button>
