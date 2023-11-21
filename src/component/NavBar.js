@@ -1,8 +1,8 @@
 import {Box, Button, Flex, useToast} from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useContext, useEffect} from "react";
-import { LoginContext } from "./LogInProvider";
+import {LoginContext} from "./LogInProvider";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope} from "@fortawesome/free-regular-svg-icons";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export function NavBar() {
-  const { fetchLogin, login, isAuthenticated, isAdmin } =
+  const {fetchLogin, login, isAuthenticated, isAdmin} =
     useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
@@ -32,17 +32,18 @@ export function NavBar() {
 
   function handleLogout() {
     axios.post("/api/member/logout").then(() => {
-        toast({
-          description: "로그아웃 되었습니다.",
-          status: "info",
-        });
-        navigate("/");
+      toast({
+        description: "로그아웃 되었습니다.",
+        status: "info",
       });
+      navigate("/");
+    });
   }
+
   return (
     <Flex>
       <Button onClick={() => navigate("/")}>
-        <FontAwesomeIcon icon={faEnvelope} />HOME</Button>
+        <FontAwesomeIcon icon={faEnvelope}/>HOME</Button>
       {isAuthenticated() && (
         <Button onClick={() => navigate("/write")}>
           <FontAwesomeIcon icon={faPen}/>
@@ -67,9 +68,9 @@ export function NavBar() {
       )}
       {isAuthenticated() || (
         <Button onClick={() => navigate("/login")}>
-          <FontAwesomeIcon icon={faRightToBracket} />
-            LogIn
-          </Button>
+          <FontAwesomeIcon icon={faRightToBracket}/>
+          LogIn
+        </Button>
       )}
       {isAuthenticated() && (
         <Button onClick={handleLogout}>
@@ -77,8 +78,10 @@ export function NavBar() {
           LogOut
         </Button>
       )}
-
-      {isAuthenticated() && <Box>{login.nickName}님</Box>}
+      {isAuthenticated() && (
+        <Button fontFamily="segoeprint" colorScheme="orange" marginLeft="30px">
+          {login.nickName}님
+        </Button>)}
     </Flex>
   );
 }

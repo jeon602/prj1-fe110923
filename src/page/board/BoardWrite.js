@@ -75,7 +75,7 @@ export function BoardWrite() {
             multiple
             onChange={(e) => setUploadFiles(e.target.files)}
           />
-          <FormHelperText>한 개의 파일은 1MB, 총 용량은 10 MB 크기 이내..</FormHelperText>
+          <FormHelperText>등록 가능한 파일 개당 용량은 1MB, 총 파일의 용량은 10MB입니다.  </FormHelperText>
         </FormControl>
 
         <Button
