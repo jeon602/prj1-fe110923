@@ -1,5 +1,5 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   FormControl,
@@ -15,7 +15,7 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  useToast,
+  useToast, Card, Heading, Center, CardHeader, Flex,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -24,7 +24,7 @@ export function MemberView() {
   // /member?id=userid
   const [params] = useSearchParams();
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const {isOpen, onClose, onOpen} = useDisclosure();
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -43,7 +43,7 @@ export function MemberView() {
   }, []);
 
   if (member === null) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   function handleDelete() {
@@ -81,36 +81,45 @@ export function MemberView() {
   }
 
   return (
-    <Box>
-      <h1>{member.id}님 정보</h1>
-      <FormControl>
-        <FormLabel>password</FormLabel>
-        <Input type="text" value={member.password} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>nickname </FormLabel>
-        <Input value={member.nickName} readOnly></Input>
-      </FormControl>
-      <FormControl>
-        <FormLabel>email</FormLabel>
-        <Input value={member.email} readOnly />
-      </FormControl>
-      <Button
-        colorScheme="yellowgreen"
-        onClick={() => navigate("/member/edit?" + params.toString())}
-      >
-        수정
-      </Button>
-      <Button colorScheme="orange" onClick={onOpen}>
-        탈퇴
-      </Button>
+    <Center>
+      <Card w={"lg"}>
+        <CardHeader>
+          <Heading>{member.id}님 정보</Heading>
+        </CardHeader>
+        <CardBody>
+          <FormControl>
+            <FormLabel>password</FormLabel>
+            <Input type="text" value={member.password} readOnly/>
+          </FormControl>
+          <FormControl>
+            <FormLabel>nickname </FormLabel>
+            <Input value={member.nickName} readOnly></Input>
+          </FormControl>
+          <FormControl>
+            <FormLabel>email</FormLabel>
+            <Input value={member.email} readOnly/>
+          </FormControl>
+        </CardBody>
+        <CardFooter><Flex gap={2}>
+          <Button
+            colorScheme="skyblue"
+            onClick={() => navigate("/member/edit?" + params.toString())}
+          >
+            수정
+          </Button>
+          <Button colorScheme="orange" onClick={onOpen}>
+            탈퇴
+          </Button>
+        </Flex>
+        </CardFooter>
+      </Card>
 
       {/* 탈퇴 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay/>
         <ModalContent>
           <ModalHeader>탈퇴 확인</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton/>
           <ModalBody>탈퇴 하시겠습니까?</ModalBody>
 
           <ModalFooter>
@@ -121,6 +130,7 @@ export function MemberView() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
-  );
+    </Center>
+  )
+
 }

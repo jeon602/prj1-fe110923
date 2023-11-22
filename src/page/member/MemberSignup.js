@@ -1,16 +1,16 @@
 import {
   Box,
-  Button,
+  Button, Card, CardBody, CardHeader, Center,
   Flex,
   FormControl,
   FormErrorMessage,
-  FormLabel,
+  FormLabel, Heading,
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import {useState} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export function MemberSignup() {
   const [id, setId] = useState("");
@@ -155,80 +155,88 @@ export function MemberSignup() {
   }
 
   return (
+    <Center>
     <Box>
-      <h2>회원 가입</h2>
-      <FormControl isInvalid={!idAvailable}>
-        <FormLabel>id</FormLabel>
-        <Flex>
+      <Card>
+        <CardHeader>
+          <Heading>WELCOME!</Heading>
+        </CardHeader>
+        <CardBody>
+        <FormControl mb={5} isInvalid={!idAvailable}>
+          <FormLabel>ID</FormLabel>
+          <Flex>
+            <Input
+              value={id}
+              onChange={(e) => {
+                setId(e.target.value);
+                setIdAvailable(false);
+              }}
+            />
+            <Button onClick={handleIdCheck}>중복확인</Button>
+          </Flex>
+          <FormErrorMessage>ID 중복체크를 해주세요.</FormErrorMessage>
+        </FormControl>
+        <FormControl mb={5} isInvalid={password.length === 0}>
+          <FormLabel>password</FormLabel>
           <Input
-            value={id}
-            onChange={(e) => {
-              setId(e.target.value);
-              setIdAvailable(false);
-            }}
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={handleIdCheck}>중복확인</Button>
-        </Flex>
-        <FormErrorMessage>ID 중복체크를 해주세요.</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={password.length === 0}>
-        <FormLabel>password</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
 
-        <FormErrorMessage>암호를 입력해 주세요.</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={password != passwordCheck}>
-        <FormLabel>password 확인</FormLabel>
-        <Input
-          type="password"
-          value={passwordCheck}
-          onChange={(e) => setPasswordCheck(e.target.value)}
-        />
-        <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
-      </FormControl>
-
-      <FormControl isInvalid={!nickNameAvailable}>
-        <FormLabel>nick name</FormLabel>
-        <Flex>
+          <FormErrorMessage>암호를 입력해 주세요.</FormErrorMessage>
+        </FormControl>
+        <FormControl mb={5}  isInvalid={password != passwordCheck}>
+          <FormLabel>password 확인</FormLabel>
           <Input
-            type="text"
-            value={nickName}
-            onChange={(e) => {
-              setNickName(e.target.value);
-              setNickNameAvailable(false);
-            }}
-          ></Input>
-          <Button onClick={handleNickNameCheck}>중복확인</Button>
-        </Flex>
-        <FormErrorMessage>nickName 중복 체크를 해주세요.</FormErrorMessage>
-      </FormControl>
-
-      <FormControl isInvalid={!emailAvailable}>
-        <FormLabel>email</FormLabel>
-        <Flex>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmailAvailable(false);
-              setEmail(e.target.value);
-            }}
+            type="password"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
           />
-          <Button onClick={handleEmailCheck}>중복체크</Button>
-        </Flex>
-        <FormErrorMessage>email 중복 체크를 해주세요.</FormErrorMessage>
-      </FormControl>
-      <Button
-        isDisabled={!submitAvailable}
-        onClick={handleSubmit}
-        colorScheme="blue"
-      >
-        가입
-      </Button>
+          <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={!nickNameAvailable}>
+          <FormLabel>nick name</FormLabel>
+          <Flex>
+            <Input
+              type="text"
+              value={nickName}
+              onChange={(e) => {
+                setNickName(e.target.value);
+                setNickNameAvailable(false);
+              }}
+            ></Input>
+            <Button onClick={handleNickNameCheck}>중복확인</Button>
+          </Flex>
+          <FormErrorMessage>nickName 중복 확인을 해주세요.</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={!emailAvailable}>
+          <FormLabel>email</FormLabel>
+          <Flex>
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmailAvailable(false);
+                setEmail(e.target.value);
+              }}
+            />
+            <Button onClick={handleEmailCheck}>중복 확인</Button>
+          </Flex>
+          <FormErrorMessage>email 중복 확인을 해주세요.</FormErrorMessage>
+        </FormControl>
+        <Button
+          isDisabled={!submitAvailable}
+          onClick={handleSubmit}
+          colorScheme="blue"
+        >
+          가입
+        </Button>
+        </CardBody>
+      </Card>
     </Box>
+    </Center>
   );
 }
