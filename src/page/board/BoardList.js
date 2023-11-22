@@ -3,7 +3,7 @@ import {
   Badge,
   Box,
   Button,
-  Flex,
+  Flex, Heading,
   Input,
   Select,
   Spinner,
@@ -129,18 +129,19 @@ export function BoardList() {
 
   return (
     <Box>
-      <h1>게시물 목록</h1>
+      <Heading>게시물 목록</Heading>
       <Box>
         <Table>
           <Thead>
             <Tr>
-              <Th>id</Th>
-              <Th>
+              {/*간격을 주려면, 테이블 헤더에 주면 된다 */}
+              <Th w={"50px"}>id</Th>
+              <Th w={"50px"}>
                 <FontAwesomeIcon icon={faHeart} />
               </Th>
               <Th>title</Th>
-              <Th>by</Th>
-              <Th>at</Th>
+              <Th w={"150px"}>by</Th>
+              <Th w={"150px"}>at</Th>
             </Tr>
           </Thead>
           <Tbody>
