@@ -1,4 +1,4 @@
-import {Box, Button, Flex, useToast} from "@chakra-ui/react";
+import {Box, Button, Flex, Spacer, useToast} from "@chakra-ui/react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useContext, useEffect} from "react";
@@ -42,46 +42,86 @@ export function NavBar() {
 
   return (
     <Flex>
-      <Button onClick={() => navigate("/")}>
+
+      <Button
+        borderRadious={0}
+        size="lg"
+        varient="ghost"
+        onClick={() => navigate("/")}>
         <FontAwesomeIcon icon={faEnvelope}/>HOME</Button>
+
       {isAuthenticated() && (
-        <Button onClick={() => navigate("/write")}>
+        <Button borderRadious={0}
+                size="lg"
+                varient="ghost"
+                onClick={() => navigate("/write")}>
           <FontAwesomeIcon icon={faPen}/>
           Write</Button>
       )}
+      <Spacer />
+
       {isAuthenticated() || (
-        <Button onClick={() => navigate("/signup")}>
+        <Button
+          borderRadious={0}
+          size="lg"
+          varient="ghost"
+          onClick={() => navigate("/signup")}>
           <FontAwesomeIcon icon={faUserPlus}/>
           Join</Button>
       )}
+
       {isAdmin() && (
-        <Button onClick={() => navigate("/member/list")}>
-          <FontAwesomeIcon icon={faUsers}/>
+        <Button
+          borderRadious={0}
+          size="lg"
+          varient="ghost"
+          leftIcon={<FontAwesomeIcon icon={faUsers}/>} onClick={() => navigate("/member/list")}>
           MemberList
         </Button>
       )}
+
       {isAuthenticated() && (
-        <Button onClick={() => navigate("/member?" + urlParams.toString())}>
+        <Button
+          borderRadious={0}
+          size="lg"
+          varient="ghost"
+          onClick={() => navigate("/member?" + urlParams.toString())}>
           <FontAwesomeIcon icon={faUser}/>
           Member_Info
         </Button>
       )}
+
       {isAuthenticated() || (
-        <Button onClick={() => navigate("/login")}>
+        <Button
+          borderRadious={0}
+          size="lg"
+          varient="ghost"
+          onClick={() => navigate("/login")}>
           <FontAwesomeIcon icon={faRightToBracket}/>
           LogIn
         </Button>
       )}
+
       {isAuthenticated() && (
-        <Button onClick={handleLogout}>
+        <Button
+          borderRadious={0}
+          size="lg"
+          varient="ghost"
+          onClick={handleLogout}>
           <FontAwesomeIcon icon={faRightFromBracket}/>
           LogOut
         </Button>
       )}
+
       {isAuthenticated() && (
-        <Button fontFamily="segoeprint" colorScheme="orange" marginLeft="30px">
+        <Button
+          borderRadious={0}
+          size="lg"
+          varient="ghost"
+          fontFamily="segoeprint" colorScheme="orange" marginLeft="30px">
           {login.nickName}님
         </Button>)}
+
     </Flex>
   );
 }
