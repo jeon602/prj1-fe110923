@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Badge,
   Box,
-  Button,
+  Button, Center,
   Flex, Heading,
   Input,
   Select,
@@ -53,6 +53,7 @@ function Pagination({ pageInfo }) {
   }
 
   return (
+    <Center mt={5} mb={40}>
     <Box>
       {pageInfo.prevPageNumber && (
         <PageButton variant="ghost" pageNumber={pageInfo.prevPageNumber}>
@@ -78,6 +79,7 @@ function Pagination({ pageInfo }) {
         </PageButton>
       )}
     </Box>
+      </Center>
   );
 }
 
@@ -99,8 +101,8 @@ function SearchComponent() {
     <Flex>
     <Select onChange={(e)=> setCategory(e.target.value)}>
       <option selected value="all">전체</option>
-    <option value="title">전체</option>
-    <option value="content">본문</option>
+    <option value="title">본문</option>
+    <option value="content">전체 + 본문</option>
     </Select>
       <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
       <Button onClick={handleSearch}>Search</Button>
@@ -128,6 +130,7 @@ export function BoardList() {
   }
 
   return (
+
     <Box>
       <Heading>게시물 목록</Heading>
       <Box>
