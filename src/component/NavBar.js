@@ -41,18 +41,16 @@ export function NavBar() {
   }
 
   return (
-    <Flex>
+    <Flex marginTop={10} marginBottom={10}>
 
       <Button
         borderRadious={0}
-        size="lg"
         varient="ghost"
         onClick={() => navigate("/")}>
         <FontAwesomeIcon icon={faEnvelope}/>HOME</Button>
 
       {isAuthenticated() && (
         <Button borderRadious={0}
-                size="lg"
                 varient="ghost"
                 onClick={() => navigate("/write")}>
           <FontAwesomeIcon icon={faPen}/>
@@ -63,7 +61,6 @@ export function NavBar() {
       {isAuthenticated() || (
         <Button
           borderRadious={0}
-          size="lg"
           varient="ghost"
           onClick={() => navigate("/signup")}>
           <FontAwesomeIcon icon={faUserPlus}/>
@@ -73,7 +70,6 @@ export function NavBar() {
       {isAdmin() && (
         <Button
           borderRadious={0}
-          size="lg"
           varient="ghost"
           leftIcon={<FontAwesomeIcon icon={faUsers}/>} onClick={() => navigate("/member/list")}>
           MemberList
@@ -83,7 +79,6 @@ export function NavBar() {
       {isAuthenticated() && (
         <Button
           borderRadious={0}
-          size="lg"
           varient="ghost"
           onClick={() => navigate("/member?" + urlParams.toString())}>
           <FontAwesomeIcon icon={faUser}/>
@@ -94,7 +89,6 @@ export function NavBar() {
       {isAuthenticated() || (
         <Button
           borderRadious={0}
-          size="lg"
           varient="ghost"
           onClick={() => navigate("/login")}>
           <FontAwesomeIcon icon={faRightToBracket}/>
@@ -105,7 +99,6 @@ export function NavBar() {
       {isAuthenticated() && (
         <Button
           borderRadious={0}
-          size="lg"
           varient="ghost"
           onClick={handleLogout}>
           <FontAwesomeIcon icon={faRightFromBracket}/>
@@ -116,9 +109,8 @@ export function NavBar() {
       {isAuthenticated() && (
         <Button
           borderRadious={0}
-          size="lg"
           varient="ghost"
-          fontFamily="segoeprint" colorScheme="orange" marginLeft="30px">
+          fontFamily="segoeprint" colorScheme="orange">
           {login.nickName}님
         </Button>)}
 

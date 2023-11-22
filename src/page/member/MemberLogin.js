@@ -1,15 +1,15 @@
 import {
   Box,
-  Button,
+  Button, Card, CardBody, CardHeader,
   FormControl,
-  FormLabel,
+  FormLabel, Heading,
   Input,
   useToast,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../component/LogInProvider";
+import { useNavigate } from "react-router-dom";
 
 export function MemberLogin() {
   const [id, setId] = useState("");
@@ -39,22 +39,29 @@ export function MemberLogin() {
 
   return (
     <Box>
-      <h1>로그인</h1>
-      <FormControl>
-        <FormLabel>아이디</FormLabel>
-        <Input value={id} onChange={(e) => setId(e.target.value)} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>암호</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormControl>
-      <Button colorScheme="pink" onClick={handleLogin}>
-        로그인
-      </Button>
+      <Card w={"sm"}>
+        <CardHeader>
+        <Heading>로그인</Heading>
+        </CardHeader>
+        <CardBody>
+        <FormControl mb={5}>
+          <FormLabel>아이디</FormLabel>
+          <Input value={id} onChange={(e) => setId(e.target.value)} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>암호</FormLabel>
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormControl>
+        </CardBody>
+        <Button colorScheme="pink" onClick={handleLogin}>
+          로그인
+        </Button>
+      </Card>
     </Box>
-  );
+
+);
 }

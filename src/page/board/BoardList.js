@@ -146,12 +146,10 @@ export function BoardList() {
             <Tr>
               {/*간격을 주려면, 테이블 헤더에 주면 된다 */}
               <Th w={"50px"}>id</Th>
-              <Th w={"50px"}>
-                <FontAwesomeIcon icon={faHeart}/>
-              </Th>
               <Th>title</Th>
               <Th w={"150px"}>by</Th>
-              <Th w={"150px"}>at</Th>
+              <Th w={"100px"}><FontAwesomeIcon icon={faHeart}/></Th>
+              <Th w={"100px"}>at</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -164,7 +162,7 @@ export function BoardList() {
                 onClick={() => navigate("/board/" + board.id)}
               >
                 <Td>{board.id}</Td>
-                <Td>{board.countLike != 0 && board.countLike}</Td>
+
                 <Td>
                   {board.title}
                   {board.countComment > 0 && (
@@ -181,6 +179,7 @@ export function BoardList() {
                   )}
                 </Td>
                 <Td>{board.nickName}</Td>
+                <Td>{board.countLike != 0 && board.countLike}</Td>
                 <Td>{board.ago}</Td>
               </Tr>
             ))}
