@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   Box,
-  Button,
+  Button, Card, CardBody, CardFooter, CardHeader, Center,
   FormControl, FormHelperText,
-  FormLabel,
+  FormLabel, Heading,
   Input,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
@@ -52,40 +52,47 @@ export function BoardWrite() {
   }
 
   return (
+    <Center>
+      <Card w={"lg"}>
+        <CardHeader>
+          <Heading>글 작성</Heading>
+        </CardHeader>
 
-    <Box>
-      <h1>글 작성</h1>
-      <Box>
-        <FormControl>
-          <FormLabel>제목</FormLabel>
-          <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-        </FormControl>
-        <FormControl>
-          <FormLabel>본문</FormLabel>
-          <Textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          ></Textarea>
-        </FormControl>
-        <FormControl>
-          <FormLabel>이미지</FormLabel>
-          <Input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={(e) => setUploadFiles(e.target.files)}
-          />
-          <FormHelperText>등록 가능한 파일 개당 용량은 1MB, 총 파일의 용량은 10MB입니다.  </FormHelperText>
-        </FormControl>
+        <CardBody>
+            <FormControl>
+              <FormLabel>제목</FormLabel>
+              <Input value={title} onChange={(e) => setTitle(e.target.value)}/>
+            </FormControl>
+            <FormControl>
+              <FormLabel>본문</FormLabel>
+              <Textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+              ></Textarea>
+            </FormControl>
+            <FormControl>
+              <FormLabel>이미지</FormLabel>
+              <Input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => setUploadFiles(e.target.files)}
+              />
+              <FormHelperText>등록 가능한 파일 개당 용량은 1MB, 총 파일의 용량은 10MB입니다.
+              </FormHelperText>
+            </FormControl>
+        </CardBody>
 
-        <Button
-          isDisabled={isSubmitting}
-          onClick={handleSubmit}
-          colorScheme="yellowgreen"
-        >
-          저장
-        </Button>
-      </Box>
-    </Box>
+        <CardFooter>
+          <Button
+            isDisabled={isSubmitting}
+            onClick={handleSubmit}
+            colorScheme="pink"
+          >
+            저장
+          </Button>
+        </CardFooter>
+      </Card>
+    </Center>
   );
 }
