@@ -15,7 +15,7 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  useToast, Card, Heading, Center, CardHeader, Flex,
+  useToast, Card, Heading, Center, CardHeader, Flex, CardBody, CardFooter,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -102,7 +102,7 @@ export function MemberView() {
         </CardBody>
         <CardFooter><Flex gap={2}>
           <Button
-            colorScheme="skyblue"
+            colorScheme="green"
             onClick={() => navigate("/member/edit?" + params.toString())}
           >
             수정
@@ -124,7 +124,7 @@ export function MemberView() {
 
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleDelete} colorScheme="orange">
+            <Button onClick={handleDelete} colorScheme="yellow">
               탈퇴
             </Button>
           </ModalFooter>
