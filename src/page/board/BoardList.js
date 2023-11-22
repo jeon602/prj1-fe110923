@@ -104,13 +104,13 @@ function SearchComponent() {
         <Select
           defaultValue="all"
           onChange={(e) => setCategory(e.target.value)}>
-          <option selected value="all">전체</option>
-          <option value="title">제목</option>
-          <option value="content">제목 + 본문</option>
+          <option selected value="all">All</option>
+          <option value="title">Title</option>
+          <option value="content">Title  Content</option>
         </Select>
         </Box>
         <Input value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
-        <Button onClick={handleSearch} colorScheme="orange">Search</Button>
+        <Button onClick={handleSearch} colorScheme="pink">Search</Button>
 
         </Flex>
     </Center>
@@ -139,7 +139,6 @@ export function BoardList() {
   return (
 
     <Box>
-      <Heading>게시물 목록</Heading>
       <Box mt={10}>
         <Table>
           <Thead>

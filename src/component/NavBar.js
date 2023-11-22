@@ -1,4 +1,4 @@
-import {Box, Button, Flex, Spacer, useToast} from "@chakra-ui/react";
+import {Box, Button, Center, Flex, Heading, Spacer, Text, useToast} from "@chakra-ui/react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useContext, useEffect} from "react";
@@ -42,12 +42,11 @@ export function NavBar() {
 
   return (
     <Flex marginTop={10} marginBottom={10}>
-
-      <Button
-        borderRadious={0}
-        varient="ghost"
-        onClick={() => navigate("/")}>
-        <FontAwesomeIcon icon={faEnvelope}/>HOME</Button>
+      <Center>
+        <Heading
+          borderRadious={0}
+          onClick={() => navigate("/")}>🎵Jeje's Collection🎵</Heading>
+      </Center>
 
       {isAuthenticated() && (
         <Button borderRadious={0}
@@ -110,7 +109,7 @@ export function NavBar() {
         <Button
           borderRadious={0}
           varient="ghost"
-          fontFamily="segoeprint" colorScheme="orange">
+          fontFamily="segoeprint" colorScheme="pink">
           {login.nickName}님
         </Button>)}
 

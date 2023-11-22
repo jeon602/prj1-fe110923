@@ -3,7 +3,7 @@ import {
   Button,
   Card,
   CardBody,
-  CardHeader,
+  CardHeader, Center,
   Flex,
   Heading,
   Modal,
@@ -258,11 +258,15 @@ export function CommentContainer({ boardId }) {
   return (
     <Box>
       {isAuthenticated() && (
+        <Center>
+          <Box w={"lg"}>
         <CommentForm
           boardId={boardId}
           isSubmitting={isSubmitting}
           onSubmit={handleSubmit}
         />
+        </Box>
+        </Center>
       )}
       <CommentList
         boardId={boardId}
@@ -285,7 +289,7 @@ export function CommentContainer({ boardId }) {
             <Button
               isDisabled={isSubmitting}
               onClick={handleDelete}
-              colorScheme="yellowgreen"
+              colorScheme="pink"
             >
               삭제
             </Button>

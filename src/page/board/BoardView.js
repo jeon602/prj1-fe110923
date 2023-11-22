@@ -118,6 +118,8 @@ export function BoardView() {
         <FormLabel>내용</FormLabel>
         <Textarea value={board.content} readOnly/>
       </FormControl>
+
+
       {/*이미지 출력*/}
       {board.files.map((file) => (
         <Box key={file.id} my= "5px" boarder="3px solid navy">
