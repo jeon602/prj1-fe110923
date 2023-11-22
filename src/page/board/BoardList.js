@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Badge,
   Box,
@@ -15,19 +15,19 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { ChatIcon } from "@chakra-ui/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {ChatIcon} from "@chakra-ui/icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
   faAngleRight,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import * as PropTypes from "prop-types";
-import { faImages } from "@fortawesome/free-regular-svg-icons";
+import {faImages} from "@fortawesome/free-regular-svg-icons";
 
 
-function PageButton({ variant, pageNumber, children }) {
+function PageButton({variant, pageNumber, children}) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ function PageButton({ variant, pageNumber, children }) {
   );
 }
 
-function Pagination({ pageInfo }) {
+function Pagination({pageInfo}) {
   const pageNumbers = [];
 
   const navigate = useNavigate();
@@ -54,32 +54,32 @@ function Pagination({ pageInfo }) {
 
   return (
     <Center mt={5} mb={40}>
-    <Box>
-      {pageInfo.prevPageNumber && (
-        <PageButton variant="ghost" pageNumber={pageInfo.prevPageNumber}>
-          <FontAwesomeIcon icon={faAngleLeft} />
-        </PageButton>
-      )}
+      <Box>
+        {pageInfo.prevPageNumber && (
+          <PageButton variant="ghost" pageNumber={pageInfo.prevPageNumber}>
+            <FontAwesomeIcon icon={faAngleLeft}/>
+          </PageButton>
+        )}
 
-      {pageNumbers.map((pageNumber) => (
-        <PageButton
-          key={pageNumber}
-          variant={
-            pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
-          }
-          pageNumber={pageNumber}
-        >
-          {pageNumber}
-        </PageButton>
-      ))}
+        {pageNumbers.map((pageNumber) => (
+          <PageButton
+            key={pageNumber}
+            variant={
+              pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
+            }
+            pageNumber={pageNumber}
+          >
+            {pageNumber}
+          </PageButton>
+        ))}
 
-      {pageInfo.nextPageNumber && (
-        <PageButton variant="ghost" pageNumber={pageInfo.nextPageNumber}>
-          <FontAwesomeIcon icon={faAngleRight} />
-        </PageButton>
-      )}
-    </Box>
-      </Center>
+        {pageInfo.nextPageNumber && (
+          <PageButton variant="ghost" pageNumber={pageInfo.nextPageNumber}>
+            <FontAwesomeIcon icon={faAngleRight}/>
+          </PageButton>
+        )}
+      </Box>
+    </Center>
   );
 }
 
@@ -93,20 +93,27 @@ function SearchComponent() {
     // /?k=keyword&c=all
     const params = new URLSearchParams();
     params.set("k", keyword);
-    params.set("c",category);
+    params.set("c", category);
     navigate("/?" + params);
   }
 
   return (
-    <Flex>
-    <Select defaultValue="all" onChange={(e)=> setCategory(e.target.value)}>
-      <option selected value="all">전체</option>
-    <option value="title">본문</option>
-    <option value="content">전체 + 본문</option>
-    </Select>
-      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-      <Button onClick={handleSearch}>Search</Button>
-    </Flex>
+    <Center marginTop={5}>
+      <Flex gap={1}>
+        <Box>
+        <Select
+          defaultValue="all"
+          onChange={(e) => setCategory(e.target.value)}>
+          <option selected value="all">전체</option>
+          <option value="title">제목</option>
+          <option value="content">제목 + 본문</option>
+        </Select>
+        </Box>
+        <Input value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
+        <Button onClick={handleSearch} colorScheme="orange">Search</Button>
+
+        </Flex>
+    </Center>
   );
 }
 
@@ -126,7 +133,7 @@ export function BoardList() {
   }, [location]);
 
   if (boardList === null) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   return (
@@ -140,7 +147,7 @@ export function BoardList() {
               {/*간격을 주려면, 테이블 헤더에 주면 된다 */}
               <Th w={"50px"}>id</Th>
               <Th w={"50px"}>
-                <FontAwesomeIcon icon={faHeart} />
+                <FontAwesomeIcon icon={faHeart}/>
               </Th>
               <Th>title</Th>
               <Th w={"150px"}>by</Th>
@@ -162,13 +169,13 @@ export function BoardList() {
                   {board.title}
                   {board.countComment > 0 && (
                     <Badge>
-                      <ChatIcon />
+                      <ChatIcon/>
                       {board.countComment}
                     </Badge>
                   )}
                   {board.countFile > 0 && (
                     <Badge>
-                      <FontAwesomeIcon icon={faImages} />
+                      <FontAwesomeIcon icon={faImages}/>
                       {board.countFile}
                     </Badge>
                   )}
@@ -181,8 +188,8 @@ export function BoardList() {
         </Table>
       </Box>
 
-      <SearchComponent />
-      <Pagination pageInfo={pageInfo} />
+      <SearchComponent/>
+      <Pagination pageInfo={pageInfo}/>
     </Box>
   );
 }
